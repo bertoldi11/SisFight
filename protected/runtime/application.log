@@ -1,0 +1,330 @@
+2013/09/19 15:15:09 [error] [exception.CException] exception 'CException' with message 'Alias "ext.bootstrap.Bootstrap" is invalid. Make sure it points to an existing PHP file and the file is readable.' in D:\wamp\apps\yii\framework\YiiBase.php:322
+Stack trace:
+#0 D:\wamp\apps\yii\framework\YiiBase.php(196): YiiBase::import('ext.bootstrap.B...', true)
+#1 D:\wamp\apps\yii\framework\base\CModule.php(386): YiiBase::createComponent(Array)
+#2 D:\wamp\apps\yii\framework\base\CModule.php(523): CModule->getComponent('bootstrap')
+#3 D:\wamp\apps\yii\framework\base\CApplication.php(163): CModule->preloadComponents()
+#4 D:\wamp\apps\yii\framework\YiiBase.php(125): CApplication->__construct('D:\wamp\www\sis...')
+#5 D:\wamp\apps\yii\framework\YiiBase.php(98): YiiBase::createApplication('CWebApplication', 'D:\wamp\www\sis...')
+#6 D:\wamp\www\sisfight\index.php(13): YiiBase::createWebApplication('D:\wamp\www\sis...')
+#7 {main}
+REQUEST_URI=/
+---
+2013/09/19 16:10:46 [error] [php] include(.php): failed to open stream: No such file or directory (D:\wamp\apps\yii\framework\YiiBase.php:427)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWidgetFactory.php(146): import()
+#1 D:\wamp\apps\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget()
+#2 D:\wamp\apps\yii\framework\web\CBaseController.php(172): SiteController->createWidget()
+#3 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbNavbar.php(169): SiteController->widget()
+#4 D:\wamp\apps\yii\framework\web\CBaseController.php(173): TbNavbar->run()
+#5 D:\wamp\www\sisfight\protected\views\layouts\main.php(43): SiteController->widget()
+#6 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#7 D:\wamp\apps\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#8 D:\wamp\apps\yii\framework\web\widgets\CContentDecorator.php(76): SiteController->renderFile()
+#9 D:\wamp\apps\yii\framework\web\widgets\CContentDecorator.php(54): CContentDecorator->decorate()
+#10 D:\wamp\apps\yii\framework\web\widgets\COutputProcessor.php(44): CContentDecorator->processOutput()
+#11 D:\wamp\apps\yii\framework\web\CBaseController.php(206): CContentDecorator->run()
+#12 D:\wamp\apps\yii\framework\web\CBaseController.php(300): SiteController->endWidget()
+#13 D:\wamp\www\sisfight\protected\views\layouts\column1.php(6): SiteController->endContent()
+#14 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#15 D:\wamp\apps\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#16 D:\wamp\apps\yii\framework\web\CController.php(784): SiteController->renderFile()
+#17 D:\wamp\www\sisfight\protected\controllers\SiteController.php(32): SiteController->render()
+#18 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#19 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#20 D:\wamp\apps\yii\framework\web\CController.php(286): SiteController->runAction()
+#21 D:\wamp\apps\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#22 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#23 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#24 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#25 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/index
+in D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbNavbar.php (169)
+in D:\wamp\www\sisfight\protected\views\layouts\main.php (43)
+in D:\wamp\www\sisfight\protected\views\layouts\column1.php (6)
+2013/09/19 17:58:52 [error] [exception.CException] exception 'CException' with message 'Property "Usuario.emailConfirmado" is not defined.' in D:\wamp\apps\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\apps\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('emailConfirmado')
+#1 D:\wamp\www\sisfight\protected\components\UserIdentity.php(35): CActiveRecord->__get('emailConfirmado')
+#2 D:\wamp\www\sisfight\protected\models\LoginForm.php(54): UserIdentity->authenticate()
+#3 D:\wamp\apps\yii\framework\validators\CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#4 D:\wamp\apps\yii\framework\validators\CValidator.php(213): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#5 D:\wamp\apps\yii\framework\base\CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#6 D:\wamp\www\sisfight\protected\controllers\SiteController.php(94): CModel->validate()
+#7 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#8 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\wamp\apps\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\wamp\apps\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#12 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/login')
+#13 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#14 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/site/login.html
+HTTP_REFERER=http://www.sisfight.dev/site/login.html
+---
+2013/09/19 18:01:19 [error] [php] require(): Filename cannot be empty (D:\wamp\apps\yii\framework\web\CBaseController.php:130)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\zii\widgets\CListView.php(291): UsuarioController->renderFile()
+#1 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(167): TbListView->renderItems()
+#2 unknown(0): TbListView->renderSection()
+#3 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(150): preg_replace_callback()
+#4 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(135): TbListView->renderContent()
+#5 D:\wamp\apps\yii\framework\web\CBaseController.php(173): TbListView->run()
+#6 D:\wamp\www\sisfight\protected\views\usuario\index.php(17): UsuarioController->widget()
+#7 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#8 D:\wamp\apps\yii\framework\web\CBaseController.php(95): UsuarioController->renderInternal()
+#9 D:\wamp\apps\yii\framework\web\CController.php(869): UsuarioController->renderFile()
+#10 D:\wamp\apps\yii\framework\web\CController.php(782): UsuarioController->renderPartial()
+#11 D:\wamp\www\sisfight\protected\controllers\UsuarioController.php(133): UsuarioController->render()
+#12 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): UsuarioController->actionIndex()
+#13 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#14 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): UsuarioController->runAction()
+#15 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#16 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#17 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): UsuarioController->filterAccessControl()
+#18 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#19 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#20 D:\wamp\apps\yii\framework\web\CController.php(265): UsuarioController->runActionWithFilters()
+#21 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): UsuarioController->run()
+#22 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#23 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#24 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/usuario/index.html
+in D:\wamp\www\sisfight\protected\views\usuario\index.php (17)
+in D:\wamp\www\sisfight\protected\controllers\UsuarioController.php (133)
+in D:\wamp\www\sisfight\index.php (13)
+2013/09/20 13:44:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2013/09/20 14:06:22 [error] [php] require(): Filename cannot be empty (D:\wamp\apps\yii\framework\web\CBaseController.php:130)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\zii\widgets\CListView.php(291): UsuarioController->renderFile()
+#1 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(167): TbListView->renderItems()
+#2 unknown(0): TbListView->renderSection()
+#3 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(150): preg_replace_callback()
+#4 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(135): TbListView->renderContent()
+#5 D:\wamp\apps\yii\framework\web\CBaseController.php(173): TbListView->run()
+#6 D:\wamp\www\sisfight\protected\views\usuario\index.php(17): UsuarioController->widget()
+#7 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#8 D:\wamp\apps\yii\framework\web\CBaseController.php(95): UsuarioController->renderInternal()
+#9 D:\wamp\apps\yii\framework\web\CController.php(869): UsuarioController->renderFile()
+#10 D:\wamp\apps\yii\framework\web\CController.php(782): UsuarioController->renderPartial()
+#11 D:\wamp\www\sisfight\protected\controllers\UsuarioController.php(120): UsuarioController->render()
+#12 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): UsuarioController->actionIndex()
+#13 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#14 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): UsuarioController->runAction()
+#15 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#16 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#17 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): UsuarioController->filterAccessControl()
+#18 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#19 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#20 D:\wamp\apps\yii\framework\web\CController.php(265): UsuarioController->runActionWithFilters()
+#21 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): UsuarioController->run()
+#22 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#23 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#24 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/usuario/index.html
+in D:\wamp\www\sisfight\protected\views\usuario\index.php (17)
+in D:\wamp\www\sisfight\protected\controllers\UsuarioController.php (120)
+in D:\wamp\www\sisfight\index.php (13)
+2013/09/20 14:49:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "perfil/index".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('perfil/index')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/perfil/index.html
+HTTP_REFERER=http://www.sisfight.dev/usuario/index.html
+---
+2013/09/20 14:50:15 [error] [php] Undefined variable: id (D:\wamp\www\sisfight\protected\views\usuario\_form.php:4)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CController.php(869): UsuarioController->renderFile()
+#1 D:\wamp\www\sisfight\protected\views\usuario\index.php(10): UsuarioController->renderPartial()
+#2 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#3 D:\wamp\apps\yii\framework\web\CBaseController.php(95): UsuarioController->renderInternal()
+#4 D:\wamp\apps\yii\framework\web\CController.php(869): UsuarioController->renderFile()
+#5 D:\wamp\apps\yii\framework\web\CController.php(782): UsuarioController->renderPartial()
+#6 D:\wamp\www\sisfight\protected\controllers\UsuarioController.php(120): UsuarioController->render()
+#7 D:\wamp\www\sisfight\protected\controllers\UsuarioController.php(88): UsuarioController->actionIndex()
+#8 unknown(0): UsuarioController->actionAlterar()
+#9 D:\wamp\apps\yii\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#10 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#11 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#12 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): UsuarioController->runAction()
+#13 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#14 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#15 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): UsuarioController->filterAccessControl()
+#16 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#17 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#18 D:\wamp\apps\yii\framework\web\CController.php(265): UsuarioController->runActionWithFilters()
+#19 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): UsuarioController->run()
+#20 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#21 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#22 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/usuario/alterar/1.html
+in D:\wamp\www\sisfight\protected\views\usuario\_form.php (4)
+in D:\wamp\www\sisfight\protected\views\usuario\index.php (10)
+in D:\wamp\www\sisfight\protected\controllers\UsuarioController.php (120)
+2013/09/20 15:01:05 [error] [exception.CException] exception 'CException' with message 'Property "Usuario.dtNascimento" is not defined.' in D:\wamp\apps\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\apps\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('dtNascimento')
+#1 D:\wamp\apps\yii\framework\base\CComponent.php(612) : eval()'d code(1): CActiveRecord->__get('dtNascimento')
+#2 D:\wamp\apps\yii\framework\base\CComponent.php(612): eval()
+#3 D:\wamp\apps\yii\framework\zii\widgets\grid\CDataColumn.php(137): CComponent->evaluateExpression('Yii::app()->dat...', Array)
+#4 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridColumn.php(151): CDataColumn->renderDataCellContent(0, Object(Usuario))
+#5 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(616): CGridColumn->renderDataCell(0)
+#6 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(572): CGridView->renderTableRow(0)
+#7 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(482): CGridView->renderTableBody()
+#8 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(167): CGridView->renderItems()
+#9 [internal function]: CBaseListView->renderSection(Array)
+#10 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(150): preg_replace_callback('/{(\w+)}/', Array, '{items}')
+#11 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(135): CBaseListView->renderContent()
+#12 D:\wamp\apps\yii\framework\web\CBaseController.php(173): CBaseListView->run()
+#13 D:\wamp\www\sisfight\protected\views\usuario\index.php(29): CBaseController->widget('bootstrap.widge...', Array)
+#14 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require('D:\wamp\www\sis...')
+#15 D:\wamp\apps\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\wamp\www\sis...', Array, true)
+#16 D:\wamp\apps\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\wamp\www\sis...', Array, true)
+#17 D:\wamp\apps\yii\framework\web\CController.php(782): CController->renderPartial('index', Array, true)
+#18 D:\wamp\www\sisfight\protected\controllers\UsuarioController.php(123): CController->render('index', Array)
+#19 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): UsuarioController->actionIndex()
+#20 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#22 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#23 D:\wamp\apps\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#24 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#26 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#27 D:\wamp\apps\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#29 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('usuario/index')
+#30 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#31 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#32 {main}
+REQUEST_URI=/usuario/index.html
+HTTP_REFERER=http://www.sisfight.dev/usuario/alterar/1.html
+---
+2013/09/20 15:21:42 [error] [exception.CException] exception 'CException' with message 'TbActiveForm and its behaviors do not have a method or closure named "dropdownRow".' in D:\wamp\apps\yii\framework\base\CComponent.php:266
+Stack trace:
+#0 D:\wamp\www\sisfight\protected\views\modalidade\_form.php(13): CComponent->__call('dropdownRow', Array)
+#1 D:\wamp\www\sisfight\protected\views\modalidade\_form.php(13): TbActiveForm->dropdownRow(Object(Modalidade), 'status', Array, Array)
+#2 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require('D:\wamp\www\sis...')
+#3 D:\wamp\apps\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\wamp\www\sis...', Array, true)
+#4 D:\wamp\apps\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\wamp\www\sis...', Array, true)
+#5 D:\wamp\www\sisfight\protected\views\modalidade\index.php(9): CController->renderPartial('_form', Array)
+#6 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require('D:\wamp\www\sis...')
+#7 D:\wamp\apps\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\wamp\www\sis...', Array, true)
+#8 D:\wamp\apps\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\wamp\www\sis...', Array, true)
+#9 D:\wamp\apps\yii\framework\web\CController.php(782): CController->renderPartial('index', Array, true)
+#10 D:\wamp\www\sisfight\protected\controllers\ModalidadeController.php(120): CController->render('index', Array)
+#11 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): ModalidadeController->actionIndex()
+#12 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#14 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#15 D:\wamp\apps\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#16 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#17 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#18 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#19 D:\wamp\apps\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#20 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#21 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('modalidade/inde...')
+#22 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#23 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#24 {main}
+REQUEST_URI=/modalidade/index.html
+HTTP_REFERER=http://www.sisfight.dev/site/index.html
+---
+2013/09/20 16:03:20 [error] [php] Undefined variable: dataModalidades (D:\wamp\www\sisfight\protected\views\turma\_form.php:11)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CController.php(869): TurmaController->renderFile()
+#1 D:\wamp\www\sisfight\protected\views\turma\index.php(9): TurmaController->renderPartial()
+#2 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require()
+#3 D:\wamp\apps\yii\framework\web\CBaseController.php(95): TurmaController->renderInternal()
+#4 D:\wamp\apps\yii\framework\web\CController.php(869): TurmaController->renderFile()
+#5 D:\wamp\apps\yii\framework\web\CController.php(782): TurmaController->renderPartial()
+#6 D:\wamp\www\sisfight\protected\controllers\TurmaController.php(121): TurmaController->render()
+#7 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): TurmaController->actionIndex()
+#8 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#9 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): TurmaController->runAction()
+#10 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#12 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): TurmaController->filterAccessControl()
+#13 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#14 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#15 D:\wamp\apps\yii\framework\web\CController.php(265): TurmaController->runActionWithFilters()
+#16 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): TurmaController->run()
+#17 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#18 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/turma/index.html
+in D:\wamp\www\sisfight\protected\views\turma\_form.php (11)
+in D:\wamp\www\sisfight\protected\views\turma\index.php (9)
+in D:\wamp\www\sisfight\protected\controllers\TurmaController.php (121)
+2013/09/20 19:51:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "favicon.ico".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2013/09/23 13:14:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "favicon.ico".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2013/09/23 14:55:50 [error] [exception.CException] exception 'CException' with message 'A propriedade "Tipocontato.idModalidade" não está definida.' in D:\wamp\apps\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\apps\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('idModalidade')
+#1 D:\wamp\apps\yii\framework\base\CComponent.php(612) : eval()'d code(1): CActiveRecord->__get('idModalidade')
+#2 D:\wamp\apps\yii\framework\base\CComponent.php(612): eval()
+#3 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbButtonColumn.php(78): CComponent->evaluateExpression('Yii::app()->cre...', Array)
+#4 D:\wamp\apps\yii\framework\zii\widgets\grid\CButtonColumn.php(319): TbButtonColumn->renderButton('update', Array, 0, Object(Tipocontato))
+#5 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridColumn.php(151): CButtonColumn->renderDataCellContent(0, Object(Tipocontato))
+#6 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(616): CGridColumn->renderDataCell(0)
+#7 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(572): CGridView->renderTableRow(0)
+#8 D:\wamp\apps\yii\framework\zii\widgets\grid\CGridView.php(482): CGridView->renderTableBody()
+#9 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(167): CGridView->renderItems()
+#10 [internal function]: CBaseListView->renderSection(Array)
+#11 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(150): preg_replace_callback('/{(\w+)}/', Array, '{items}')
+#12 D:\wamp\apps\yii\framework\zii\widgets\CBaseListView.php(135): CBaseListView->renderContent()
+#13 D:\wamp\apps\yii\framework\web\CBaseController.php(173): CBaseListView->run()
+#14 D:\wamp\www\sisfight\protected\views\tipocontato\index.php(32): CBaseController->widget('bootstrap.widge...', Array)
+#15 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require('D:\wamp\www\sis...')
+#16 D:\wamp\apps\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\wamp\www\sis...', Array, true)
+#17 D:\wamp\apps\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\wamp\www\sis...', Array, true)
+#18 D:\wamp\apps\yii\framework\web\CController.php(782): CController->renderPartial('index', Array, true)
+#19 D:\wamp\www\sisfight\protected\controllers\TipocontatoController.php(126): CController->render('index', Array)
+#20 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): TipocontatoController->actionIndex()
+#21 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#22 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#23 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#24 D:\wamp\apps\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#25 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#26 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#27 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#28 D:\wamp\apps\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#29 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#30 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('tipocontato/ind...')
+#31 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#32 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#33 {main}
+REQUEST_URI=/tipocontato/index.html
+HTTP_REFERER=http://www.sisfight.dev/
+---
+2013/09/23 15:27:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "favicon.ico".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
