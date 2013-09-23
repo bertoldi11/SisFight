@@ -62,6 +62,7 @@
 							'class' => 'bootstrap.widgets.TbMenu',
 							'items' => array(
 								array('label'=>'Home', 'url'=>array('/site/index')),
+                                array('label'=>'Aluno', 'url'=>array('/aluno/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Modalidades', 'url'=>array('/modalidade/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Tipo Contato', 'url'=>array('/tipocontato/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Turma', 'url'=>array('/turma/index'), 'visible'=>!Yii::app()->user->isGuest),

@@ -4,12 +4,6 @@ class TipocontatoController extends Controller
 {
 	// Caso esteja sendo feito um update, salva o modulo aqui para poder ler na action index que monta a view.
 	private $_model=null;
-	
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout = '//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -89,6 +83,17 @@ class TipocontatoController extends Controller
 				$this->redirect($this->createUrl('tipocontato/index'));
 			}
 		}
+
+        if(isset($_GET['reqAjax']))
+        {
+            $dadosRetorno = array(
+                'mascara'=>$model->mascara,
+                'classe'=>$model->classe,
+                'prefixo'=>$model->prefixo
+            );
+
+            die(json_encode($dadosRetorno));
+        }
 
 		$this->_model = $model;
 		$this->actionIndex();

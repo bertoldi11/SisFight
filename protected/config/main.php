@@ -57,7 +57,7 @@ return array(
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=sisfight',
             'emulatePrepare' => true,
-            'username' => 'des_userdb',
+            'username' => 'des_userbd',
             'password' => 'acessoBDdes',
             'charset' => 'utf8',
         ),
