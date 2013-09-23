@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51036732-00c9-4907-b132-8c8c1bf0b967" name="Default" comment="retirada dos assets do controle de versão.">
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\SisFight.iml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\frameworkRootSettings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\modules.xml" afterPath="" />
+    <list default="true" id="51036732-00c9-4907-b132-8c8c1bf0b967" name="Default" comment="">
       <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\scopes\scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="D:\wamp\www\sisfight\.idea\workspace.xml" afterPath="" />
     </list>
     <ignored path="sisfight.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="51036732-00c9-4907-b132-8c8c1bf0b967" time="1379968882467" ignored="false" />
+    <file path="/Dummy.txt" changelist="51036732-00c9-4907-b132-8c8c1bf0b967" time="1379969038197" ignored="false" />
     <file path="/index.php" changelist="51036732-00c9-4907-b132-8c8c1bf0b967" time="1379965779257" ignored="false" />
     <file path="/_form.php" changelist="51036732-00c9-4907-b132-8c8c1bf0b967" time="1379968242133" ignored="false" />
     <file path="/a.php" changelist="51036732-00c9-4907-b132-8c8c1bf0b967" time="1379962510303" ignored="false" />
@@ -222,7 +215,11 @@
       <created>1379968801208</created>
       <updated>1379968801208</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="retirada do .idea do controle de versão.">
+      <created>1379969041790</created>
+      <updated>1379969041790</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -292,7 +289,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="retirada dos assets do controle de versão." />
+    <option name="LAST_COMMIT_MESSAGE" value="retirada do .idea do controle de versão." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -310,6 +307,7 @@
     <MESSAGE value="Commit parcial do cadastro de aluno" />
     <MESSAGE value="Modificação no gitignore" />
     <MESSAGE value="retirada dos assets do controle de versão." />
+    <MESSAGE value="retirada do .idea do controle de versão." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
