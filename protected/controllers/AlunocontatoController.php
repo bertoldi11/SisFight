@@ -34,20 +34,26 @@ class AlunocontatoController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionNovo()
+    public function actionNovo($id)
     {
         $model=new Alunocontato;
 
         if(isset($_POST['Alunocontato']))
         {
             $model->attributes=$_POST['Alunocontato'];
+            $model->idAluno = $id;
             if($model->save())
-                $this->redirect(array('view','id'=>$model->idAlunoContato));
+            {
+                Yii::app()->user->setFlash('success', 'Dados Salvos.');
+                unset(Yii::app()->session['alunoContato']);
+            }
+            else
+            {
+              Yii::app()->session['alunoContato'] = $model;
+            }
         }
-
-        $this->render('create',array(
-            'model'=>$model,
-        ));
+        Yii::app()->user->setFlash('abaAtiva', 1);
+        $this->redirect($this->createUrl('aluno/alterar', array('id'=>$id)));
     }
 
     /**
@@ -58,17 +64,21 @@ class AlunocontatoController extends Controller
     public function actionAlterar($id)
     {
         $model=$this->loadModel($id);
+        Yii::app()->session['alunoContato']=$model;
 
         if(isset($_POST['Alunocontato']))
         {
             $model->attributes=$_POST['Alunocontato'];
             if($model->save())
-                $this->redirect(array('view','id'=>$model->idAlunoContato));
+            {
+                Yii::app()->user->setFlash('success', 'Dados Alterados.');
+                unset(Yii::app()->session['alunoContato']);
+            }
         }
 
-        $this->render('update',array(
-            'model'=>$model,
-        ));
+
+        Yii::app()->user->setFlash('abaAtiva', 1);
+        $this->redirect($this->createUrl('aluno/alterar', array('id'=>$id)));
     }
 
     /**

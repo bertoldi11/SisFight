@@ -1,7 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'aluno-form',
 	'enableAjaxValidation'=>false,
-    'action'=>($model->isNewRecord) ? $this->createUrl('aluno/novo') : $this->createUrl('aluno/alterar', array('id'=>$model->idModalidade))
+    'action'=>($model->isNewRecord) ? $this->createUrl('aluno/novo') : $this->createUrl('aluno/alterar', array('id'=>$model->idAluno))
 )); ?>
     <div class="clearfix">
         <p class="help-block">Campos com <span class="required">*</span> são obrigatórios.</p>

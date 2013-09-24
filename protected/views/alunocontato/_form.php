@@ -1,7 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'alunocontato-form',
 	'enableAjaxValidation'=>false,
-    'action'=> ($model->isNewRecord) ? $this->createUrl('alunocontato/novo') : $this->createUrl('alunocontato/alterar', array('id'=>$model->idAlunoContato))
+    'action'=> ($model->isNewRecord) ? $this->createUrl('alunocontato/novo', array('id'=>$idAluno)) : $this->createUrl('alunocontato/alterar', array('id'=>$model->idAlunoContato))
 )); ?>
 
 <?php
@@ -72,6 +72,27 @@ else
     </div>
 </div>
 <?php $this->endWidget(); ?>
+
+<hr>
+
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+    'type'=>'striped',
+    'template'=>"{items}",
+    'dataProvider'=>$dataProviderContatos,
+    'columns'=>array(
+        array('name'=> 'idTipoContato0.descricao', 'header'=>'Tipo de Contato'),
+        array('name'=> 'contato', 'header'=>'Contato'),
+        array('name'=> 'complemento', 'header'=>'Complemento'),
+        array(
+            'htmlOptions' => array('nowrap'=>'nowrap'),
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'template'=>'{update} {delete}',
+            'updateButtonUrl'=>'Yii::app()->createUrl("alunocontato/alterar", array("id"=>"$data->idAlunoContato"))',
+            'deleteButtonUrl'=>'Yii::app()->createUrl("alunocontato/delete", array("id"=>"$data->idAlunoContato"))',
+        )
+    ),
+));?>
+
 <script>
     $(function(){
         $('#Alunocontato_idTipoContato').change(function(e){
@@ -94,7 +115,7 @@ else
                         else{
                             $('#divContatoValor').empty();
                             $('#divContatoValor').css('width','auto');
-                            $('#divContatoValor').append('<label class="required" for="Alunocontato_contato"> Contato </label><input type="text" id="Alunocontato_contato" name="Pessoacontato[contato]" maxlength="30" class="span11">');
+                            $('#divContatoValor').append('<label class="required" for="Alunocontato_contato"> Contato </label><input type="text" id="Alunocontato_contato" name="Alunocontato[contato]" maxlength="30" class="span11">');
                         }
 
                         if(JSON.mascara){

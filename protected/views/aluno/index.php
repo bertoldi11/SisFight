@@ -2,19 +2,31 @@
 $this->breadcrumbs=array(
     'Alunos',
 );
-
-
-
 ?>
-<h1>Alunos</h1>
-
-<?php $this->widget('zii.widgets.jui.CJuiTabs', array(
-    'tabs'=>array(
-        'Dados Gerais'=> $this->renderPartial('_form', array('model'=>$model), true),
-        'Contato'=>$this->renderPartial('application.views.alunocontato._form', array('model'=>$modelContato), true),
-    ),
-    'options'=>array(
-        'collapsible'=>true,
-        'active'=>$abaAtiva
-    ),
-));?>
+<div class="box-content span11">
+    <fieldset>
+        <legend>Alunos</legend>
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+            'label' => 'Novo Aluno',
+            'type' => 'primary',
+            'buttonType'=>'link',
+            'url'=>$this->createUrl('aluno/novo'),
+        ));?>
+        <?php $this->widget('bootstrap.widgets.TbGridView', array(
+            'type'=>'striped',
+            'template'=>"{items}",
+            'dataProvider'=>$dataProvider,
+            'columns'=>array(
+                array('name'=> 'idAluno', 'header'=>'Código'),
+                array('name'=> 'nome', 'header'=>'Nome'),
+                array(
+                    'htmlOptions' => array('nowrap'=>'nowrap'),
+                    'class'=>'bootstrap.widgets.TbButtonColumn',
+                    'template'=>'{update} {delete}',
+                    'updateButtonUrl'=>'Yii::app()->createUrl("aluno/alterar", array("id"=>"$data->idAluno"))',
+                    'deleteButtonUrl'=>'Yii::app()->createUrl("aluno/delete", array("id"=>"$data->idAluno"))',
+                )
+            ),
+        ));?>
+    </fieldset>
+</div>

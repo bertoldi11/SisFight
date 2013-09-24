@@ -64,6 +64,7 @@
 								array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Aluno', 'url'=>array('/aluno/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Modalidades', 'url'=>array('/modalidade/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                array('label'=>'Tipo Aluno', 'url'=>array('/tipoaluno/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Tipo Contato', 'url'=>array('/tipocontato/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Turma', 'url'=>array('/turma/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Usuários', 'url'=>array('/usuario/index'), 'visible'=>!Yii::app()->user->isGuest),
@@ -74,12 +75,12 @@
 					),
 				)
 			); ?>
-			<div class="span12">
+			<div class="span11" style="margin: 0;">
 				<?php echo $content; ?>
 			</div>
 
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span11" style="margin: 0;">
 					<footer class="footer">
 						<div class="container">
 					        <p class="copy">

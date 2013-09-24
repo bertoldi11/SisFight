@@ -44,10 +44,11 @@ class AlunoController extends Controller
         if(isset($_POST['Aluno']))
         {
             $model->attributes=$_POST['Aluno'];
-            $model->idUsuario = Yii::app()->user->id;
+            $model->idUsuario = Yii::app()->user->idUsuario;
             if ($model -> save())
             {
                 Yii::app()->user->setFlash('success', 'Dados Salvos.');
+                $this->redirect($this->createUrl('aluno/alterar', array('id'=>$model->idAluno)));
             }
             else
             {
@@ -56,8 +57,13 @@ class AlunoController extends Controller
                 exit;
             }
         }
-        Yii::app()->user->setFlash('abaAtiva',0);
-        $this->redirect($this->createUrl('aluno/index'));
+        $cs=Yii::app()->getClientScript();
+        $cs->registerCoreScript('maskedinput');
+
+        $this->render('dadosaluno', array(
+           'model'=>$model,
+           'abaAtiva'=>0
+        ));
     }
 
     /**
@@ -65,19 +71,69 @@ class AlunoController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id)
+    public function actionAlterar($id)
     {
         $model=$this->loadModel($id);
 
         if(isset($_POST['Aluno']))
         {
             $model->attributes=$_POST['Aluno'];
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->idAluno));
+            if ($model -> save())
+            {
+                Yii::app()->user->setFlash('success', 'Dados Alterados.');
+            }
         }
 
-        $this->render('update',array(
+        $cs=Yii::app()->getClientScript();
+        $cs->registerCoreScript('maskedinput');
+
+        if(isset( Yii::app()->session['alunoContato']))
+        {
+            $modelContato =  Yii::app()->session['alunoContato'];
+            unset(Yii::app()->session['alunoContato']);
+        }
+        else
+            $modelContato = new Alunocontato;
+
+        if(isset( Yii::app()->session['alunoTurma']))
+        {
+            $modelTurma =  Yii::app()->session['alunoTurma'];
+            unset(Yii::app()->session['alunoTurma']);
+        }
+        else
+            $modelTurma = new Alunoturma;
+
+        $dataProviderContatos = new CActiveDataProvider('Alunocontato', array(
+            'criteria'=>array(
+                'condition'=>'idAluno = :idAluno',
+                'params'=>array(':idAluno'=>$model->idAluno)
+            ),
+        ));
+
+        $dataProviderTurma = new CActiveDataProvider('Alunoturma', array(
+            'criteria'=>array(
+                'condition'=>'idAluno = :idAluno',
+                'params'=>array(':idAluno'=>$model->idAluno),
+                'with'=>array('idTipoAluno0','idTurma0','idTurma0.idModalidade0')
+            ),
+        ));
+        $abaAtiva = Yii::app()->user->getFlash('abaAtiva');
+        $abaAtiva = ($abaAtiva >=0) ? $abaAtiva : 0;
+
+        $this->render('dadosaluno', array(
             'model'=>$model,
+            'modelContato'=>$modelContato,
+            'modelTurma'=>$modelTurma,
+            'abaAtiva'=>$abaAtiva,
+            'dataProviderContatos'=>$dataProviderContatos,
+            'dataProviderTurma'=>$dataProviderTurma,
+            'modelTiposAluno'=>CHtml::listData(Tipoaluno::model()->findAll(),'idTipoAluno','descricao'),
+            'modelDescTurma'=>CHtml::listData(Turma::model()->with('idModalidade0')->findAll(),'idTurma',
+                function($turma){
+                    return CHtml::encode($turma->idModalidade0->descricao.' - '.substr($turma->inicio,0,5).' as '.substr($turma->termino,0,5));
+                }
+            ),
+
         ));
     }
 
@@ -106,19 +162,9 @@ class AlunoController extends Controller
      */
     public function actionIndex()
     {
-        $cs=Yii::app()->getClientScript();
-        $cs->registerCoreScript('maskedinput');
-
-        $abaAtiva = Yii::app()->user->getFlash('abaAtiva');
-        $abaAtiva = ($abaAtiva >=0) ? $abaAtiva : 0;
-        $model=(is_null($this->_model)) ? new Aluno : $this->_model;
-        $modelContato = new Alunocontato;
         $dataProvider=new CActiveDataProvider('Aluno');
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
-            'model'=>$model,
-            'modelContato'=>$modelContato,
-            'abaAtiva'=>$abaAtiva
         ));
     }
 
