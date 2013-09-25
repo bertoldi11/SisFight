@@ -1060,3 +1060,41 @@ Stack trace:
 REQUEST_URI=/aluno/alterar/1.html
 HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
 ---
+2013/09/25 00:13:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "favicon.ico".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2013/09/25 00:39:30 [error] [exception.CException] exception 'CException' with message 'TbActiveForm: 'source' parameter must be defined. ' in D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbActiveForm.php:804
+Stack trace:
+#0 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\input\TbInputVertical.php(652): TbActiveForm->typeAheadField(Object(Pagamento), 'idAlunoTurma', Array, Array)
+#1 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\input\TbInput.php(356): TbInputVertical->typeAheadField()
+#2 D:\wamp\apps\yii\framework\web\CBaseController.php(173): TbInput->run()
+#3 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbActiveForm.php(1153): CBaseController->widget('bootstrap.widge...', Array)
+#4 D:\wamp\www\sisfight\protected\extensions\bootstrap\widgets\TbActiveForm.php(556): TbActiveForm->inputRow('typeahead', Object(Pagamento), 'idAlunoTurma', Array, Array)
+#5 D:\wamp\www\sisfight\protected\views\pagamento\index.php(19): TbActiveForm->typeAheadRow(Object(Pagamento), 'idAlunoTurma', Array, Array)
+#6 D:\wamp\apps\yii\framework\web\CBaseController.php(126): require('D:\wamp\www\sis...')
+#7 D:\wamp\apps\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\wamp\www\sis...', Array, true)
+#8 D:\wamp\apps\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\wamp\www\sis...', Array, true)
+#9 D:\wamp\apps\yii\framework\web\CController.php(782): CController->renderPartial('index', Array, true)
+#10 D:\wamp\www\sisfight\protected\controllers\PagamentoController.php(115): CController->render('index', Array)
+#11 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): PagamentoController->actionIndex()
+#12 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#14 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#15 D:\wamp\apps\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#16 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#17 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#18 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#19 D:\wamp\apps\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#20 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#21 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('pagamento/index')
+#22 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#23 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#24 {main}
+REQUEST_URI=/pagamento/index.html
+HTTP_REFERER=http://www.sisfight.dev/
+---

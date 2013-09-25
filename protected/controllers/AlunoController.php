@@ -24,7 +24,7 @@ class AlunoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index'),
+                'actions'=>array('novo','alterar','delete','index','buscar'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -33,6 +33,24 @@ class AlunoController extends Controller
         );
     }
 
+    public function actionBuscar()
+    {
+        $retorno = array();
+        $criteria = new CDbCriteria;
+        $criteria->compare('nome',$_GET['term'],true);
+
+        $alunos = Aluno::model()->findAll($criteria);
+        foreach($alunos as $aluno)
+        {
+            $retorno[] = array(
+                'id'=>$aluno->idAluno,
+                'label'=>$aluno->nome
+            );
+        }
+
+        echo CJSON::encode($retorno);
+        Yii::app()->end();
+    }
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
