@@ -33,7 +33,7 @@
 <hr>
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
-    'type'=>'striped',
+    'type'=>'striped bordered condensed',
     'template'=>"{items}",
     'dataProvider'=>$dataProviderTurma,
     'columns'=>array(

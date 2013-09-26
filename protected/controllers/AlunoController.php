@@ -180,9 +180,15 @@ class AlunoController extends Controller
      */
     public function actionIndex()
     {
+        $model=new Aluno('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Aluno']))
+            $model->attributes=$_GET['Aluno'];
+
         $dataProvider=new CActiveDataProvider('Aluno');
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
+            'model'=>$model
         ));
     }
 

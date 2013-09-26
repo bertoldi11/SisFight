@@ -13,7 +13,7 @@ $this->breadcrumbs=array(
             'url'=>$this->createUrl('aluno/novo'),
         ));?>
         <?php $this->widget('bootstrap.widgets.TbGridView', array(
-            'type'=>'striped',
+            'type'=>'striped bordered condensed',
             'template'=>"{items}",
             'dataProvider'=>$dataProvider,
             'columns'=>array(

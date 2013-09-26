@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
         <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
         <hr>
         <?php $this->widget('bootstrap.widgets.TbGridView', array(
-            'type'=>'striped',
+            'type'=>'striped bordered condensed',
             'template'=>"{items}",
             'dataProvider'=>$dataProvider,
             'columns'=>array(
