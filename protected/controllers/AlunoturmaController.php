@@ -30,37 +30,6 @@ class AlunoturmaController extends Controller
         );
     }
 
-    public function actionBuscarPorAluno()
-    {
-        $dados = array();
-        $criteria = new CDbCriteria(array(
-            'condition'=>'idAluno = :idAluno',
-            'params'=>array(':idAluno'=>$_POST['idAluno']),
-            'with'=>array('idTurma0','idTurma0.idModalidade0')
-        ));
-
-        $turmas = Alunoturma::model()->findAll($criteria);
-
-        if(count($turmas) > 0)
-        {
-            foreach($turmas as $turma)
-            {
-                $dados['TURMAS'][]=array(
-                    'idAlunoTurma'=>$turma->idAlunoTurma,
-                    'turma'=>$turma->idTurma0->idModalidade0->descricao.' - '.substr($turma->idTurma0->inicio,0,5). ' as '.substr($turma->idTurma0->termino,0,5),
-                    'valorPagar'=>$turma->valor
-                );
-            }
-        }
-        else
-        {
-            $dados['MSG'] = 'Esse aluno não está em nenhuma turma.';
-        }
-
-        echo CJSON::encode($dados);
-        Yii::app()->end();
-    }
-
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -71,10 +40,26 @@ class AlunoturmaController extends Controller
 
         if(isset($_POST['Alunoturma']))
         {
+            $_POST['Alunoturma'][''] = str_replace(',','.', str_replace('.','',$_POST['Alunoturma']['']));
             $model->attributes=$_POST['Alunoturma'];
             $model->idAluno = $id;
             if($model->save())
             {
+                //Gera primeiro pagamento no dia atual para alunos mensalistas.
+                if($model->idTipoAluno == Yii::app()->params['idMensalista'])
+                {
+                    $modelPagamento = new Pagamento;
+                    $modelPagamento->attributes = array(
+                        'idAlunoTurma'=>$model->idAlunoTurma,
+                        'idUsuario'=>Yii::app()->user->idUsuario,
+                        'valorPagar'=>$model->valor,
+                        'dtCadastro'=> new CDbExpression('NOW()'),
+                        'dtVencimento'=>new CDbExpression('NOW()'),
+                    );
+
+                    $modelPagamento->save();
+                }
+
                 Yii::app()->user->setFlash('success', 'Dados Salvos.');
                 unset(Yii::app()->session['alunoTurma']);
             }
@@ -99,7 +84,18 @@ class AlunoturmaController extends Controller
 
         if(isset($_POST['Alunoturma']))
         {
+            if($model->status != $_POST['Alunoturma']['status'])
+            {
+               //TODO: Ações ao inativar/reativar usuário
+            }
+
+            if($model->idAlunoTurma != $_POST['Alunoturma']['idAlunoTurma'])
+            {
+                //TODO: Ações ao mudar tipo de aluno.
+            }
             $model->attributes=$_POST['Alunoturma'];
+
+
             if($model->save())
             {
                 Yii::app()->user->setFlash('success', 'Dados Alterados.');

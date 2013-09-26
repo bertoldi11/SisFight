@@ -28,10 +28,10 @@ $this->breadcrumbs=array(
                         'class'=>'span4'
                     ),
                 ));?>
-                <button class="btn btn-primary" id="buscarTurmasAluno"><i class="icon-search"></i></button>
+                <button class="btn btn-primary" id="buscarPagamentosAluno"><i class="icon-search"></i></button>
                 <input type="hidden" name="idAluno" id="idAluno" />
             <?php $this->endWidget(); ?>
-            <div class="span4" style="margin: 0; display: none" id="divTurmas">
+            <div class="span7" style="margin: 0; display: none" id="divTurmas">
                 <?php $box = $this->beginWidget(
                     'bootstrap.widgets.TbBox',
                     array(
@@ -44,7 +44,9 @@ $this->breadcrumbs=array(
                         <thead>
                         <tr>
                             <th>Turma</th>
-                            <th>Valor a Pagar</th>
+                            <th>Vencimento</th>
+                            <th>A Pagar</th>
+                            <th>Valor Pago</th>
                             <th>&nbsp;</th>
                         </tr>
                         </thead>
@@ -55,20 +57,46 @@ $this->breadcrumbs=array(
                 <?php $this->endWidget(); ?>
             </div>
         </div>
-        <div id="dadosPagamento" style="display: none">
-            <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
-        </div>
     </fieldset>
 </div>
 <script>
     $(function(){
-        $('#buscarTurmasAluno').click(function(event){
+        $('.pagarTurma').live('click', function(event){
+            event.preventDefault();
+            var idPagamento = $(this).attr("data-idPagamento");
+            var valorPgto = $('input[name="valorPago['+idPagamento+']"]').val();
+            var url =  $(this).attr("href");
+            if(idPagamento > 0)
+            {
+                $.ajax({
+                    url: url,
+                    data: {idPagamento: idPagamento, valor: valorPgto},
+                    type: "post",
+                    dataType: 'json'
+                }).done(function(JSON){
+                    if(JSON.MSG){
+                        alert(JSON.MSG);
+                    }
+
+                    if(JSON.SUCESSO){
+                        $('#tbodyTurma').children('tr[id="linha_pgto_'+idPagamento+'"]').fadeOut('slow', function(){
+                            $(this).remove();
+                            if($('#tbodyTurma > tr').length <= 0)
+                            {
+                                $('#divTurmas').hide();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        $('#buscarPagamentosAluno').click(function(event){
             event.preventDefault();
             var idAluno = $('#idAluno').val();
             if(idAluno > 0)
             {
                 $.ajax({
-                    url: '<?php echo $this->createUrl('alunoturma/buscarporaluno');?>',
+                    url: '<?php echo $this->createUrl('pagamento/emaberto');?>',
                     data: {idAluno: idAluno},
                     type: 'post',
                     dataType: 'json'
@@ -77,15 +105,17 @@ $this->breadcrumbs=array(
                         alert(JSON.MSG);
                     }
 
-                    if(JSON.TURMAS.length > 0)
+                    if(JSON.PAGAMENTOS.length > 0)
                     {
                         $('#tbodyTurma > tr').remove();
-                        for(var i=0; i<JSON.TURMAS.length;  i++)
+                        for(var i=0; i<JSON.PAGAMENTOS.length;  i++)
                         {
-                            var linha = $('<tr>');
-                            $(linha).append('<td>'+JSON.TURMAS[i].turma+'</td>');
-                            $(linha).append('<td>'+JSON.TURMAS[i].valorPagar+'</td>');
-                            $(linha).append('<td><a class="pagarTurma" href="/pagamento/novo" data-idAlTu="'+JSON.TURMAS[i].idAlunoTurma+'" ><i class="icon-money"></i> </td>');
+                            var linha = $('<tr id="linha_pgto_'+JSON.PAGAMENTOS[i].idPagamento+'">');
+                            $(linha).append('<td>'+JSON.PAGAMENTOS[i].turma+'</td>');
+                            $(linha).append('<td>'+JSON.PAGAMENTOS[i].dataVencimento+'</td>');
+                            $(linha).append('<td style="text-align: right;">'+JSON.PAGAMENTOS[i].valorPagar+'</td>');
+                            $(linha).append('<td><input type="text" name="valorPago['+JSON.PAGAMENTOS[i].idPagamento+']" /> </td>');
+                            $(linha).append('<td><a class="pagarTurma" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-money"></i> </td>');
                             $('#tbodyTurma').append(linha);
                         }
                         $('#divTurmas').show();

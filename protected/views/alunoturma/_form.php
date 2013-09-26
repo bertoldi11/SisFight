@@ -18,6 +18,9 @@
     <div class="pull-left  span2">
 	    <?php echo $form->textFieldRow($model,'valor',array('class'=>'span12','maxlength'=>6)); ?>
     </div>
+    <div class="pull-left  span2">
+        <?php echo $form->dropdownListRow($model,'status',Yii::app()->params['status'],array('class'=>'span12','maxlength'=>6)); ?>
+    </div>
     <div class="pull-left  span2" style="padding-top: 25px;">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
@@ -36,7 +39,8 @@
     'columns'=>array(
         array('name'=> 'idTurma0.idModalidade0.descricao', 'header'=>'Turma', 'value'=>'$data->idTurma0->idModalidade0->descricao." - ".substr($data->idTurma0->inicio,0,5)." as ".substr($data->idTurma0->termino,0,5)'),
         array('name'=> 'idTipoAluno0.descricao', 'header'=>'Tipo Aluno'),
-        array('name'=> 'valor', 'header'=>'Valor'),
+        array('name'=> 'valor', 'header'=>'Valor', 'value'=>'number_format($data->valor,2,",",".")'),
+        array('name'=> 'status', 'header'=>'Status','value'=>'($data->status == "A") ? "Ativo" : "Inativo"'),
         array(
             'htmlOptions' => array('nowrap'=>'nowrap'),
             'class'=>'bootstrap.widgets.TbButtonColumn',

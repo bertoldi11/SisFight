@@ -24,13 +24,55 @@ class PagamentoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index'),
+                'actions'=>array('novo','alterar','delete','index', 'emAberto'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    private  function montaNomeTurma($model)
+    {
+        return $model->idAlunoTurma0->idTurma0->idModalidade0->descricao. ' - ' . substr($model->idAlunoTurma0->idTurma0->inicio,0,5). ' as '.substr($model->idAlunoTurma0->idTurma0->termino,0,5);
+    }
+
+    public function actionEmAberto()
+    {
+        $dados = array();
+        $criteria = new CDbCriteria(array(
+            'condition'=>'t.status = "A"',
+            'with'=>array(
+                'idAlunoTurma0'=>array('condition'=>'idAluno = :idAluno', 'params'=>array(':idAluno'=>$_POST['idAluno'])),
+                'idAlunoTurma0.idTurma0',
+                'idAlunoTurma0.idTurma0.idModalidade0')
+        ));
+
+        $modelPagamentos = Pagamento::model()->findAll($criteria);
+        $dados['PAGAMENTOS'] = array();
+        if(count($modelPagamentos) > 0)
+        {
+            foreach($modelPagamentos as $pagamento)
+            {
+                $dados['PAGAMENTOS'][] = array(
+                    'idPagamento'=>$pagamento->idPagamento,
+                    'dataVencimento'=>Formatacao::formatData($pagamento->dtVencimento),
+                    'valorPagar'=>number_format($pagamento->valorPagar,2,",","."),
+                    'turma'=>$this->montaNomeTurma($pagamento),
+                    'url'=>$this->createUrl('pagamento/alterar', array('id'=>$pagamento->idPagamento)),
+                );
+            }
+
+        }
+        else
+        {
+            $dados['MSG'] = 'Nenhum Pagamento em aberto para esse aluno.';
+        }
+
+        echo CJSON::encode($dados);
+
+        Yii::app()->end();
     }
 
     /**
@@ -66,20 +108,49 @@ class PagamentoController extends Controller
      */
     public function actionAlterar($id)
     {
-        $model=$this->loadModel($id);
-
-        if(isset($_POST['Pagamento']))
+        $dados = array('SUCESSO'=>true);
+        if(isset($_POST['idPagamento']) && $_POST['idPagamento'] == $id)
         {
-            $model->attributes=$_POST['Pagamento'];
-            if ($model -> save())
+            $valorPgto = str_replace(',','.', str_replace('.','',$_POST['valor']));
+
+            if(is_numeric($valorPgto) && $valorPgto > 0)
             {
-                Yii::app()->user->setFlash('success', 'Dados Alterados.');
-                $this->redirect($this->createUrl('turma/index'));
+                $model=$this->loadModel($id);
+
+                $model->attributes = array(
+                    'valorPago'=>$valorPgto,
+                    'dtPagamento'=>new CDbExpression('NOW()'),
+                    'status'=>'P'
+                );
+                if ($model -> save())
+                {
+                    $dados['MSG'] = "Pagamento efetuado.";
+
+                    $modelPagamento = new Pagamento;
+                    $modelPagamento->attributes = array(
+                        'idAlunoTurma'=>$model->idAlunoTurma,
+                        'idUsuario'=>Yii::app()->user->idUsuario,
+                        'valorPagar'=>$model->valorPagar,
+                        'dtCadastro'=> new CDbExpression('NOW()'),
+                        'dtVencimento'=>new CDbExpression('DATE_ADD("'.$model->dtVencimento.'",INTERVAL 1 MONTH)'),
+                    );
+
+                    $modelPagamento->save();
+                }
+            }
+            else
+            {
+                $dados['MSG'] = "Dados inválidos.";
+                $dados['SUCESSO'] = false;
             }
         }
-
-        $this->_model = $model;
-        $this->actionIndex();
+        else
+        {
+            $dados['MSG'] = "Dados inválidos.";
+            $dados['SUCESSO'] = false;
+        }
+        echo CJSON::encode($dados);
+        Yii::app()->end();
     }
 
     /**
@@ -107,7 +178,7 @@ class PagamentoController extends Controller
      */
     public function actionIndex()
     {
-        $model=(is_null($this->_model)) ? new Pagamento : $this->_model;
+        $model = (is_null($this->_model)) ? new Pagamento : $this->_model;
         $dataProvider=new CActiveDataProvider('Pagamento');
         $this -> render('index', array(
             'model'=>$model,

@@ -4,13 +4,15 @@
  * This is the model class for table "pagamento".
  *
  * The followings are the available columns in table 'pagamento':
- * @property integer $idPagemento
+ * @property integer $idPagamento
  * @property integer $idAlunoTurma
  * @property integer $idUsuario
- * @property string $valor
+ * @property string $valorPagar
+ * @property string $dtCadastro
+ * @property string $dtVencimento
+ * @property string $status
  * @property string $dtPagamento
- * @property integer $mesRef
- * @property integer $anoRef
+ * @property string $valorPago
  *
  * The followings are the available model relations:
  * @property Alunoturma $idAlunoTurma0
@@ -34,12 +36,14 @@ class Pagamento extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idAlunoTurma, idUsuario, valor, dtPagamento, mesRef, anoRef', 'required'),
-			array('idAlunoTurma, idUsuario, mesRef, anoRef', 'numerical', 'integerOnly'=>true),
-			array('valor', 'length', 'max'=>6),
+			array('idAlunoTurma, idUsuario, valorPagar, dtCadastro, dtVencimento', 'required'),
+			array('idAlunoTurma, idUsuario', 'numerical', 'integerOnly'=>true),
+			array('valorPagar, valorPago', 'length', 'max'=>6),
+			array('status', 'length', 'max'=>1),
+			array('dtPagamento', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idPagemento, idAlunoTurma, idUsuario, valor, dtPagamento, mesRef, anoRef', 'safe', 'on'=>'search'),
+			array('idPagamento, idAlunoTurma, idUsuario, valorPagar, dtCadastro, dtVencimento, status, dtPagamento, valorPago', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,13 +66,15 @@ class Pagamento extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idPagemento' => 'Id Pagemento',
+			'idPagamento' => 'Id Pagamento',
 			'idAlunoTurma' => 'Id Aluno Turma',
 			'idUsuario' => 'Id Usuario',
-			'valor' => 'Valor',
-			'dtPagamento' => 'Pagamento',
-			'mesRef' => 'Mês Referência',
-			'anoRef' => 'Ano Referência',
+			'valorPagar' => 'Valor Pagar',
+			'dtCadastro' => 'Dt Cadastro',
+			'dtVencimento' => 'Dt Vencimento',
+			'status' => 'Status',
+			'dtPagamento' => 'Dt Pagamento',
+			'valorPago' => 'Valor Pago',
 		);
 	}
 
@@ -90,13 +96,15 @@ class Pagamento extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idPagemento',$this->idPagemento);
+		$criteria->compare('idPagamento',$this->idPagamento);
 		$criteria->compare('idAlunoTurma',$this->idAlunoTurma);
 		$criteria->compare('idUsuario',$this->idUsuario);
-		$criteria->compare('valor',$this->valor,true);
+		$criteria->compare('valorPagar',$this->valorPagar,true);
+		$criteria->compare('dtCadastro',$this->dtCadastro,true);
+		$criteria->compare('dtVencimento',$this->dtVencimento,true);
+		$criteria->compare('status',$this->status,true);
 		$criteria->compare('dtPagamento',$this->dtPagamento,true);
-		$criteria->compare('mesRef',$this->mesRef);
-		$criteria->compare('anoRef',$this->anoRef);
+		$criteria->compare('valorPago',$this->valorPago,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

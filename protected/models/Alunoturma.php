@@ -9,6 +9,7 @@
  * @property integer $idTurma
  * @property integer $idTipoAluno
  * @property string $valor
+ * @property string $status
  *
  * The followings are the available model relations:
  * @property Aluno $idAluno0
@@ -37,9 +38,10 @@ class Alunoturma extends CActiveRecord
 			array('idAluno, idTurma, idTipoAluno', 'required'),
 			array('idAluno, idTurma, idTipoAluno', 'numerical', 'integerOnly'=>true),
 			array('valor', 'length', 'max'=>6),
+			array('status', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idAlunoTurma, idAluno, idTurma, idTipoAluno, valor', 'safe', 'on'=>'search'),
+			array('idAlunoTurma, idAluno, idTurma, idTipoAluno, valor, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +71,7 @@ class Alunoturma extends CActiveRecord
 			'idTurma' => 'Turma',
 			'idTipoAluno' => 'Tipo Aluno',
 			'valor' => 'Valor',
+			'status' => 'Status',
 		);
 	}
 
@@ -95,6 +98,7 @@ class Alunoturma extends CActiveRecord
 		$criteria->compare('idTurma',$this->idTurma);
 		$criteria->compare('idTipoAluno',$this->idTipoAluno);
 		$criteria->compare('valor',$this->valor,true);
+		$criteria->compare('status',$this->status,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
