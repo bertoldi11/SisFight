@@ -43,11 +43,23 @@ class PagamentoController extends Controller
         $dados = array();
         $criteria = new CDbCriteria(array(
             'condition'=>'t.status = "A"',
-            'with'=>array(
+        ));
+
+        if(Yii::app()->params['tipoCobranca'] == 1)
+        {
+            $criteria->with = array(
                 'idAlunoTurma0'=>array('condition'=>'idAluno = :idAluno', 'params'=>array(':idAluno'=>$_POST['idAluno'])),
                 'idAlunoTurma0.idTurma0',
-                'idAlunoTurma0.idTurma0.idModalidade0')
-        ));
+                'idAlunoTurma0.idTurma0.idModalidade0'
+            );
+        }
+        else
+        {
+            $criteria->with = array(
+                'idAlunoTurma0'=>array('condition'=>'idAluno = :idAluno', 'params'=>array(':idAluno'=>$_POST['idAluno'])),
+                'idAlunoTurma0.idModalidade0'
+            );
+        }
 
         $modelPagamentos = Pagamento::model()->findAll($criteria);
         $dados['PAGAMENTOS'] = array();
@@ -59,7 +71,7 @@ class PagamentoController extends Controller
                     'idPagamento'=>$pagamento->idPagamento,
                     'dataVencimento'=>Formatacao::formatData($pagamento->dtVencimento),
                     'valorPagar'=>number_format($pagamento->valorPagar,2,",","."),
-                    'turma'=>$this->montaNomeTurma($pagamento),
+                    'turma'=>(Yii::app()->params['tipoCobranca'] == 1) ? $this->montaNomeTurma($pagamento) : $pagamento->idAlunoTurma0->idModalidade0->descricao,
                     'url'=>$this->createUrl('pagamento/alterar', array('id'=>$pagamento->idPagamento)),
                 );
             }

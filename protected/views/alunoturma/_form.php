@@ -9,9 +9,15 @@
 </div>
 
 <div class="clearfix">
-    <div class="pull-left span2">
-	    <?php echo $form->dropdownListRow($model,'idTurma',$modelDescTurma,array('class'=>'span12', 'prompt'=>'selecione')); ?>
-    </div>
+    <?php if(Yii::app()->params['tipoConbranca'] == 1):?>
+        <div class="pull-left span2">
+            <?php echo $form->dropdownListRow($model,'idTurma',$modelDescTurma,array('class'=>'span12', 'prompt'=>'selecione')); ?>
+        </div>
+    <?php else:?>
+        <div class="pull-left span2">
+            <?php echo $form->dropdownListRow($model,'idModalidade',$modelDescTurma,array('class'=>'span12', 'prompt'=>'selecione')); ?>
+        </div>
+    <?php endif;?>
     <div class="pull-left  span2">
 	    <?php echo $form->dropdownListRow($model,'idTipoAluno',$modelTiposAluno,array('class'=>'span12', 'prompt'=>'selecione')); ?>
     </div>
@@ -32,21 +38,31 @@
 <?php $this->endWidget(); ?>
 <hr>
 
+<?php
+$colunas = array();
+if(Yii::app()->params['tipoCobranca'] == 1)
+    $colunas[] = array('name'=> 'idTurma0.idModalidade0.descricao', 'header'=>'Turma', 'value'=>'$data->idTurma0->idModalidade0->descricao." - ".substr($data->idTurma0->inicio,0,5)." as ".substr($data->idTurma0->termino,0,5)');
+else
+    $colunas[] = array('name'=>'idModalidade0.descricao', 'header'=>'Modalidade');
+
+$colunasOutras = array(
+    array('name'=> 'idTipoAluno0.descricao', 'header'=>'Tipo Aluno'),
+    array('name'=> 'valor', 'header'=>'Valor', 'value'=>'number_format($data->valor,2,",",".")'),
+    array('name'=> 'status', 'header'=>'Status','value'=>'($data->status == "A") ? "Ativo" : "Inativo"'),
+    array(
+        'htmlOptions' => array('nowrap'=>'nowrap'),
+        'class'=>'bootstrap.widgets.TbButtonColumn',
+        'template'=>'{update} {delete}',
+        'updateButtonUrl'=>'Yii::app()->createUrl("alunoturma/alterar", array("id"=>"$data->idAlunoTurma"))',
+        'deleteButtonUrl'=>'Yii::app()->createUrl("alunoturma/delete", array("id"=>"$data->idAlunoTurma"))',
+    )
+);
+
+?>
+
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
     'type'=>'striped bordered condensed',
     'template'=>"{items}",
     'dataProvider'=>$dataProviderTurma,
-    'columns'=>array(
-        array('name'=> 'idTurma0.idModalidade0.descricao', 'header'=>'Turma', 'value'=>'$data->idTurma0->idModalidade0->descricao." - ".substr($data->idTurma0->inicio,0,5)." as ".substr($data->idTurma0->termino,0,5)'),
-        array('name'=> 'idTipoAluno0.descricao', 'header'=>'Tipo Aluno'),
-        array('name'=> 'valor', 'header'=>'Valor', 'value'=>'number_format($data->valor,2,",",".")'),
-        array('name'=> 'status', 'header'=>'Status','value'=>'($data->status == "A") ? "Ativo" : "Inativo"'),
-        array(
-            'htmlOptions' => array('nowrap'=>'nowrap'),
-            'class'=>'bootstrap.widgets.TbButtonColumn',
-            'template'=>'{update} {delete}',
-            'updateButtonUrl'=>'Yii::app()->createUrl("alunoturma/alterar", array("id"=>"$data->idAlunoTurma"))',
-            'deleteButtonUrl'=>'Yii::app()->createUrl("alunoturma/delete", array("id"=>"$data->idAlunoTurma"))',
-        )
-    ),
+    'columns'=> array_merge($colunas,$colunasOutras),
 ));?>

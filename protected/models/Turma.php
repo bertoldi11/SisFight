@@ -14,6 +14,7 @@
  * The followings are the available model relations:
  * @property Alunoturma[] $alunoturmas
  * @property Modalidade $idModalidade0
+ * @property Turmafrequencia[] $turmafrequencias
  */
 class Turma extends CActiveRecord
 {
@@ -52,6 +53,7 @@ class Turma extends CActiveRecord
 		return array(
 			'alunoturmas' => array(self::HAS_MANY, 'Alunoturma', 'idTurma'),
 			'idModalidade0' => array(self::BELONGS_TO, 'Modalidade', 'idModalidade'),
+            'turmafrequencias' => array(self::HAS_MANY, 'Turmafrequencia', 'idTurma'),
 		);
 	}
 

@@ -9,6 +9,7 @@
  * @property string $status
  *
  * The followings are the available model relations:
+ * @property Alunoturma[] $alunoturmas
  * @property Turma[] $turmas
  */
 class Modalidade extends CActiveRecord
@@ -46,6 +47,7 @@ class Modalidade extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'alunoturmas' => array(self::HAS_MANY, 'Alunoturma', 'idModalidade'),
 			'turmas' => array(self::HAS_MANY, 'Turma', 'idModalidade'),
 		);
 	}

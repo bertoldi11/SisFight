@@ -135,6 +135,21 @@ class AlunoController extends Controller
                 'with'=>array('idTipoAluno0','idTurma0','idTurma0.idModalidade0')
             ),
         ));
+
+        if(Yii::app()->params['tipoCobranca'] == 1)
+        {
+            $modelDescTurma  =CHtml::listData(Turma::model()->with('idModalidade0')->findAll('t.status = "A"'),'idTurma',
+                function($turma){
+                    return CHtml::encode($turma->idModalidade0->descricao.' - '.substr($turma->inicio,0,5).' as '.substr($turma->termino,0,5));
+                }
+            );
+        }
+        elseif(Yii::app()->params['tipoCobranca'] == 2)
+        {
+            $modelDescTurma  =CHtml::listData(Modalidade::model()->findAll('status = "A"'),'idModalidade','descricao');
+        }
+
+
         $abaAtiva = Yii::app()->user->getFlash('abaAtiva');
         $abaAtiva = ($abaAtiva >=0) ? $abaAtiva : 0;
 
@@ -146,12 +161,7 @@ class AlunoController extends Controller
             'dataProviderContatos'=>$dataProviderContatos,
             'dataProviderTurma'=>$dataProviderTurma,
             'modelTiposAluno'=>CHtml::listData(Tipoaluno::model()->findAll(),'idTipoAluno','descricao'),
-            'modelDescTurma'=>CHtml::listData(Turma::model()->with('idModalidade0')->findAll(),'idTurma',
-                function($turma){
-                    return CHtml::encode($turma->idModalidade0->descricao.' - '.substr($turma->inicio,0,5).' as '.substr($turma->termino,0,5));
-                }
-            ),
-
+            'modelDescTurma'=>$modelDescTurma,
         ));
     }
 
@@ -182,13 +192,22 @@ class AlunoController extends Controller
     {
         $model=new Aluno('search');
         $model->unsetAttributes();  // clear any default values
+
         if(isset($_GET['Aluno']))
             $model->attributes=$_GET['Aluno'];
 
-        $dataProvider=new CActiveDataProvider('Aluno');
+        $criteria=new CDbCriteria();
+        $count=Usuario::model()->count();
+        $pages=new CPagination($count);
+
+        // results per page
+        $pages->pageSize=1;
+        $pages->applyLimit($criteria);
+
+
         $this->render('index',array(
-            'dataProvider'=>$dataProvider,
-            'model'=>$model
+            'model'=>$model,
+            'pages'=>$pages
         ));
     }
 

@@ -35,7 +35,7 @@ $this->breadcrumbs=array(
                 <?php $box = $this->beginWidget(
                     'bootstrap.widgets.TbBox',
                     array(
-                        'title' => 'Turmas',
+                        'title' => 'Pagamentos em Aberto',
                         'headerIcon' => 'icon-th-list',
                         'htmlOptions' => array('class' => 'bootstrap-widget-table')
                     )
@@ -43,7 +43,7 @@ $this->breadcrumbs=array(
                     <table>
                         <thead>
                         <tr>
-                            <th>Turma</th>
+                            <th>Turma/Modalidade</th>
                             <th>Vencimento</th>
                             <th>A Pagar</th>
                             <th>Valor Pago</th>

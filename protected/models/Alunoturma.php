@@ -6,14 +6,17 @@
  * The followings are the available columns in table 'alunoturma':
  * @property integer $idAlunoTurma
  * @property integer $idAluno
- * @property integer $idTurma
  * @property integer $idTipoAluno
+ * @property integer $idTurma
+ * @property integer $idModalidade
  * @property string $valor
  * @property string $status
  *
  * The followings are the available model relations:
+ * @property Alunofrequencia[] $alunofrequencias
  * @property Aluno $idAluno0
  * @property Tipoaluno $idTipoAluno0
+ * @property Modalidade $idModalidade0
  * @property Turma $idTurma0
  * @property Pagamento[] $pagamentos
  */
@@ -35,13 +38,13 @@ class Alunoturma extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idAluno, idTurma, idTipoAluno', 'required'),
-			array('idAluno, idTurma, idTipoAluno', 'numerical', 'integerOnly'=>true),
+			array('idAluno, idTipoAluno', 'required'),
+			array('idAluno, idTipoAluno, idTurma, idModalidade', 'numerical', 'integerOnly'=>true),
 			array('valor', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idAlunoTurma, idAluno, idTurma, idTipoAluno, valor, status', 'safe', 'on'=>'search'),
+			array('idAlunoTurma, idAluno, idTipoAluno, idTurma, idModalidade, valor, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,8 +56,10 @@ class Alunoturma extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'alunofrequencias' => array(self::HAS_MANY, 'Alunofrequencia', 'idAlunoTurma'),
 			'idAluno0' => array(self::BELONGS_TO, 'Aluno', 'idAluno'),
 			'idTipoAluno0' => array(self::BELONGS_TO, 'Tipoaluno', 'idTipoAluno'),
+            'idModalidade0' => array(self::BELONGS_TO, 'Modalidade', 'idModalidade'),
 			'idTurma0' => array(self::BELONGS_TO, 'Turma', 'idTurma'),
 			'pagamentos' => array(self::HAS_MANY, 'Pagamento', 'idAlunoTurma'),
 		);
@@ -68,8 +73,9 @@ class Alunoturma extends CActiveRecord
 		return array(
 			'idAlunoTurma' => 'Id Aluno Turma',
 			'idAluno' => 'Id Aluno',
-			'idTurma' => 'Turma',
 			'idTipoAluno' => 'Tipo Aluno',
+            'idTurma' => 'Turma',
+            'idModalidade' => 'Modalidade',
 			'valor' => 'Valor',
 			'status' => 'Status',
 		);
@@ -95,8 +101,9 @@ class Alunoturma extends CActiveRecord
 
 		$criteria->compare('idAlunoTurma',$this->idAlunoTurma);
 		$criteria->compare('idAluno',$this->idAluno);
-		$criteria->compare('idTurma',$this->idTurma);
 		$criteria->compare('idTipoAluno',$this->idTipoAluno);
+        $criteria->compare('idTurma',$this->idTurma);
+        $criteria->compare('idModalidade',$this->idModalidade);
 		$criteria->compare('valor',$this->valor,true);
 		$criteria->compare('status',$this->status,true);
 

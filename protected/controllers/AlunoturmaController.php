@@ -40,7 +40,7 @@ class AlunoturmaController extends Controller
 
         if(isset($_POST['Alunoturma']))
         {
-            $_POST['Alunoturma'][''] = str_replace(',','.', str_replace('.','',$_POST['Alunoturma']['']));
+            $_POST['Alunoturma']['valor'] = str_replace(',','.', str_replace('.','',$_POST['Alunoturma']['valor']));
             $model->attributes=$_POST['Alunoturma'];
             $model->idAluno = $id;
             if($model->save())

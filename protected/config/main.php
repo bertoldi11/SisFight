@@ -90,5 +90,6 @@ return array(
         'adminEmail'=>'webmaster@example.com',
         'status'=>array('A'=>'Ativo', 'I'=>'Inativo'),
         'idMensalista'=>1,
+        'tipoCobranca'=> 2, //1 - Turma | 2 - Modalidade
     ),
 );

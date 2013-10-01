@@ -15,7 +15,8 @@ $this->breadcrumbs=array(
         <?php $this->widget('bootstrap.widgets.TbGridView', array(
             'type'=>'striped bordered condensed',
             'template'=>"{items}",
-            'dataProvider'=>$dataProvider,
+            'dataProvider'=>$model->search(),
+            'filter'=>$model,
             'columns'=>array(
                 array('name'=> 'idAluno', 'header'=>'Código'),
                 array('name'=> 'nome', 'header'=>'Nome'),
@@ -28,5 +29,8 @@ $this->breadcrumbs=array(
                 )
             ),
         ));?>
+        <?php $this->widget('CLinkPager', array(
+            'pages' => $pages,
+        )) ?>
     </fieldset>
 </div>
