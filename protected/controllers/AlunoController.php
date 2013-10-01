@@ -98,6 +98,10 @@ class AlunoController extends Controller
             $model->attributes=$_POST['Aluno'];
             if ($model -> save())
             {
+                if(isset($_POST['Usuario']['idEndereco']))
+                {
+                    Yii::app()->user->setFlash('abaAtiva', 2);
+                }
                 Yii::app()->user->setFlash('success', 'Dados Alterados.');
             }
         }
@@ -136,6 +140,9 @@ class AlunoController extends Controller
             ),
         ));
 
+        $modelEndereco = (!is_null($model->idEndereco) && !empty($model->idEndereco)) ? Endereco::model()->with('idCidade0','idCidade0.idUf0')->findByPk($model->idEndereco)
+                                                                                                    : null;
+
         if(Yii::app()->params['tipoCobranca'] == 1)
         {
             $modelDescTurma  =CHtml::listData(Turma::model()->with('idModalidade0')->findAll('t.status = "A"'),'idTurma',
@@ -162,6 +169,7 @@ class AlunoController extends Controller
             'dataProviderTurma'=>$dataProviderTurma,
             'modelTiposAluno'=>CHtml::listData(Tipoaluno::model()->findAll(),'idTipoAluno','descricao'),
             'modelDescTurma'=>$modelDescTurma,
+            'modelEndereco'=>$modelEndereco
         ));
     }
 

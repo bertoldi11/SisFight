@@ -1,33 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "aluno".
+ * This is the model class for table "uf".
  *
- * The followings are the available columns in table 'aluno':
- * @property integer $idAluno
- * @property integer $idUsuario
- * @property integer $idEndereco
+ * The followings are the available columns in table 'uf':
+ * @property integer $idUf
  * @property string $nome
- * @property string $dtNasc
- * @property string $nomeMae
- * @property string $nomePai
- * @property integer $endNumero
- * @property string $endComplemento
+ * @property string $sigla
  *
  * The followings are the available model relations:
- * @property Usuario $idUsuario0
- * @property Endereco $idEndereco0
- * @property Alunocontato[] $alunocontatos
- * @property Alunoturma[] $alunoturmas
+ * @property Cidade[] $cidades
  */
-class Aluno extends CActiveRecord
+class Uf extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'aluno';
+		return 'uf';
 	}
 
 	/**
@@ -38,13 +29,12 @@ class Aluno extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idUsuario, nome, dtNasc', 'required'),
-			array('idUsuario, idEndereco, endNumero', 'numerical', 'integerOnly'=>true),
-			array('nome, nomeMae, nomePai', 'length', 'max'=>100),
-            array('endComplemento', 'length', 'max'=>30),
+			array('nome, sigla', 'required'),
+			array('nome', 'length', 'max'=>20),
+			array('sigla', 'length', 'max'=>2),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idAluno, idUsuario,  idEndereco, nome, dtNasc, nomeMae, nomePai, endNumero, endComplemento', 'safe', 'on'=>'search'),
+			array('idUf, nome, sigla', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,10 +46,7 @@ class Aluno extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idUsuario0' => array(self::BELONGS_TO, 'Usuario', 'idUsuario'),
-            'idEndereco0' => array(self::BELONGS_TO, 'Endereco', 'idEndereco'),
-			'alunocontatos' => array(self::HAS_MANY, 'Alunocontato', 'idAluno'),
-			'alunoturmas' => array(self::HAS_MANY, 'Alunoturma', 'idAluno'),
+			'cidades' => array(self::HAS_MANY, 'Cidade', 'idUf'),
 		);
 	}
 
@@ -69,15 +56,9 @@ class Aluno extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idAluno' => 'Cod. Aluno',
-			'idUsuario' => 'Cod. Usuario',
-            'idEndereco' => 'Endereço',
+			'idUf' => 'Id Uf',
 			'nome' => 'Nome',
-			'dtNasc' => 'Nascimento',
-			'nomeMae' => 'Nome Mãe',
-			'nomePai' => 'Nome Pai',
-            'endNumero' => 'Número',
-            'endComplemento' => 'Complemento',
+			'sigla' => 'Sigla',
 		);
 	}
 
@@ -99,15 +80,9 @@ class Aluno extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idAluno',$this->idAluno);
-		$criteria->compare('idUsuario',$this->idUsuario);
-        $criteria->compare('idEndereco',$this->idEndereco);
+		$criteria->compare('idUf',$this->idUf);
 		$criteria->compare('nome',$this->nome,true);
-		$criteria->compare('dtNasc',$this->dtNasc,true);
-		$criteria->compare('nomeMae',$this->nomeMae,true);
-		$criteria->compare('nomePai',$this->nomePai,true);
-        $criteria->compare('endNumero',$this->endNumero);
-        $criteria->compare('endComplemento',$this->endComplemento,true);
+		$criteria->compare('sigla',$this->sigla,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -118,7 +93,7 @@ class Aluno extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Aluno the static model class
+	 * @return Uf the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

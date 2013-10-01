@@ -8,7 +8,13 @@ if(!$model->isNewRecord)
             'dataProviderContatos'=>$dataProviderContatos
         ),
         true
-   );
+    );
+    $tabs['Endereco'] = $this->renderPartial('_formendereco', array(
+            'modelAluno'=>$model,
+            'modelEndereco'=>$modelEndereco
+        ),
+        true
+    );
     $tabs['Modalidade'] = $this->renderPartial('application.views.alunoturma._form', array(
             'model'=>$modelTurma,
             'idAluno'=>$model->idAluno,

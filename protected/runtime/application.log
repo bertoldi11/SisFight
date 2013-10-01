@@ -1506,3 +1506,151 @@ Stack trace:
 REQUEST_URI=/pagamento/emaberto.html
 HTTP_REFERER=http://www.sisfight.dev/pagamento/index.html
 ---
+2013/10/01 17:27:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:27:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:28:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:28:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:29:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:29:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:29:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:29:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:56:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:56:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:56:11 [error] [php] include(Endereco.php): failed to open stream: No such file or directory (D:\wamp\apps\yii\framework\YiiBase.php:427)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\db\ar\CActiveRecord.php(395): spl_autoload_call()
+#1 D:\wamp\apps\yii\framework\web\CActiveDataProvider.php(165): model()
+#2 D:\wamp\apps\yii\framework\web\CActiveDataProvider.php(87): CActiveDataProvider->getModel()
+#3 D:\wamp\www\sisfight\protected\controllers\EnderecoController.php(64): CActiveDataProvider->__construct()
+#4 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(49): EnderecoController->actionBuscarCep()
+#5 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): EnderecoController->runAction()
+#7 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#8 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#9 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): EnderecoController->filterAccessControl()
+#10 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#11 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#12 D:\wamp\apps\yii\framework\web\CController.php(265): EnderecoController->runActionWithFilters()
+#13 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): EnderecoController->run()
+#14 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#15 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/endereco/buscarcep.html
+in D:\wamp\www\sisfight\protected\controllers\EnderecoController.php (64)
+in D:\wamp\www\sisfight\index.php (13)
+2013/10/01 17:57:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 17:57:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "images/ajax-loader-circ.gif".' in D:\wamp\apps\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('images/ajax-loa...')
+#1 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\wamp\www\sisfight\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/images/ajax-loader-circ.gif
+HTTP_REFERER=http://www.sisfight.dev/aluno/alterar/1.html
+---
+2013/10/01 18:05:18 [error] [php] Undefined variable: modelUsuario (D:\wamp\www\sisfight\protected\controllers\AlunoController.php:143)
+Stack trace:
+#0 D:\wamp\apps\yii\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#1 D:\wamp\apps\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(133): AlunoController->runAction()
+#3 D:\wamp\apps\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#4 D:\wamp\apps\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#5 D:\wamp\apps\yii\framework\web\filters\CInlineFilter.php(58): AlunoController->filterAccessControl()
+#6 D:\wamp\apps\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#7 D:\wamp\apps\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\wamp\apps\yii\framework\web\CController.php(265): AlunoController->runActionWithFilters()
+#9 D:\wamp\apps\yii\framework\web\CWebApplication.php(282): AlunoController->run()
+#10 D:\wamp\apps\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\wamp\apps\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\wamp\www\sisfight\index.php(13): CWebApplication->run()
+REQUEST_URI=/aluno/alterar/1.html
+in D:\wamp\www\sisfight\protected\controllers\AlunoController.php (143)
+in D:\wamp\www\sisfight\index.php (13)

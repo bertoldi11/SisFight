@@ -36,6 +36,9 @@ return array(
 
     // application components
     'components'=>array(
+        'buscaPorCep'=>array(
+            'class'=>'ext.correios.BuscaPorCepApp'
+        ),
         'bootstrap' => array(
             'class' => 'ext.bootstrap.components.Bootstrap',
             'fontAwesomeCss'=>true

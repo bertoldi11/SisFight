@@ -68,7 +68,7 @@ class AlunoturmaController extends Controller
                 Yii::app()->session['alunoTurma'] = $model;
             }
         }
-        Yii::app()->user->setFlash('abaAtiva', 2);
+        Yii::app()->user->setFlash('abaAtiva', 3);
         $this->redirect($this->createUrl('aluno/alterar', array('id'=>$id)));
     }
 
@@ -104,7 +104,7 @@ class AlunoturmaController extends Controller
         }
 
 
-        Yii::app()->user->setFlash('abaAtiva', 2);
+        Yii::app()->user->setFlash('abaAtiva', 3);
         $this->redirect($this->createUrl('aluno/alterar', array('id'=>$id)));
     }
 
