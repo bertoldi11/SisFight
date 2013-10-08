@@ -15,9 +15,10 @@
  * @property string $endComplemento
  *
  * The followings are the available model relations:
- * @property Usuario $idUsuario0
  * @property Endereco $idEndereco0
+ * @property Usuario $idUsuario0
  * @property Alunocontato[] $alunocontatos
+ * @property Alunofrequencia[] $alunofrequencias
  * @property Alunoturma[] $alunoturmas
  */
 class Aluno extends CActiveRecord
@@ -56,9 +57,10 @@ class Aluno extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idUsuario0' => array(self::BELONGS_TO, 'Usuario', 'idUsuario'),
             'idEndereco0' => array(self::BELONGS_TO, 'Endereco', 'idEndereco'),
+			'idUsuario0' => array(self::BELONGS_TO, 'Usuario', 'idUsuario'),
 			'alunocontatos' => array(self::HAS_MANY, 'Alunocontato', 'idAluno'),
+            'alunofrequencias' => array(self::HAS_MANY, 'Alunofrequencia', 'idAluno'),
 			'alunoturmas' => array(self::HAS_MANY, 'Alunoturma', 'idAluno'),
 		);
 	}

@@ -1,32 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "alunoturma".
+ * This is the model class for table "alunofrequencia".
  *
- * The followings are the available columns in table 'alunoturma':
- * @property integer $idAlunoTurma
+ * The followings are the available columns in table 'alunofrequencia':
+ * @property integer $idAlunoFrequencia
+ * @property integer $idTurmaFrequencia
  * @property integer $idAluno
- * @property integer $idTipoAluno
- * @property integer $idTurma
- * @property integer $idModalidade
- * @property string $valor
+ * @property integer $dia
  * @property string $status
  *
  * The followings are the available model relations:
+ * @property Turmafrequencia $idTurmaFrequencia0
  * @property Aluno $idAluno0
- * @property Modalidade $idModalidade0
- * @property Tipoaluno $idTipoAluno0
- * @property Turma $idTurma0
- * @property Pagamento[] $pagamentos
  */
-class Alunoturma extends CActiveRecord
+class Alunofrequencia extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'alunoturma';
+		return 'alunofrequencia';
 	}
 
 	/**
@@ -37,13 +32,12 @@ class Alunoturma extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idAluno, idTipoAluno', 'required'),
-			array('idAluno, idTipoAluno, idTurma, idModalidade', 'numerical', 'integerOnly'=>true),
-			array('valor', 'length', 'max'=>6),
+			array('idTurmaFrequencia, idAluno, dia', 'required'),
+			array('idTurmaFrequencia, idAluno, dia', 'numerical', 'integerOnly'=>true),
 			array('status', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idAlunoTurma, idAluno, idTipoAluno, idTurma, idModalidade, valor, status', 'safe', 'on'=>'search'),
+			array('idAlunoFrequencia, idTurmaFrequencia, idAluno, dia, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,11 +49,8 @@ class Alunoturma extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'idTurmaFrequencia0' => array(self::BELONGS_TO, 'Turmafrequencia', 'idTurmaFrequencia'),
 			'idAluno0' => array(self::BELONGS_TO, 'Aluno', 'idAluno'),
-			'idModalidade0' => array(self::BELONGS_TO, 'Modalidade', 'idModalidade'),
-			'idTipoAluno0' => array(self::BELONGS_TO, 'Tipoaluno', 'idTipoAluno'),
-			'idTurma0' => array(self::BELONGS_TO, 'Turma', 'idTurma'),
-			'pagamentos' => array(self::HAS_MANY, 'Pagamento', 'idAlunoTurma'),
 		);
 	}
 
@@ -69,12 +60,10 @@ class Alunoturma extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idAlunoTurma' => 'Id Aluno Turma',
+			'idAlunoFrequencia' => 'Id Aluno Frequencia',
+			'idTurmaFrequencia' => 'Id Turma Frequencia',
 			'idAluno' => 'Id Aluno',
-			'idTipoAluno' => 'Tipo Aluno',
-			'idTurma' => 'Turma',
-			'idModalidade' => 'Modalidade',
-			'valor' => 'Valor',
+			'dia' => 'Dia',
 			'status' => 'Status',
 		);
 	}
@@ -97,12 +86,10 @@ class Alunoturma extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idAlunoTurma',$this->idAlunoTurma);
+		$criteria->compare('idAlunoFrequencia',$this->idAlunoFrequencia);
+		$criteria->compare('idTurmaFrequencia',$this->idTurmaFrequencia);
 		$criteria->compare('idAluno',$this->idAluno);
-		$criteria->compare('idTipoAluno',$this->idTipoAluno);
-		$criteria->compare('idTurma',$this->idTurma);
-		$criteria->compare('idModalidade',$this->idModalidade);
-		$criteria->compare('valor',$this->valor,true);
+		$criteria->compare('dia',$this->dia);
 		$criteria->compare('status',$this->status,true);
 
 		return new CActiveDataProvider($this, array(
@@ -114,7 +101,7 @@ class Alunoturma extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Alunoturma the static model class
+	 * @return Alunofrequencia the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
