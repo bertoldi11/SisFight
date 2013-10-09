@@ -44,8 +44,16 @@ $this->breadcrumbs=array(
                             $diaSemana = date('N',mktime(0,0,0,$cabecalho->mes,$i,$cabecalho->ano));
                             if($diaSemana >= 1 && $diaSemana<=5)
                             {
-                                echo "<td>".CHtml::radioButtonList('frequencia['.$aluno->idAluno.']['.$i.']', $aluno->alunofrequencias[$posFrequencia]->status,Yii::app()->params['statusFreqAluno'])."</td>";
-                                $posFrequencia++;
+                               if($aluno->alunofrequencias[$posFrequencia]->dia == $i)
+                               {
+                                   echo "<td>".CHtml::radioButtonList('frequencia['.$aluno->idAluno.']['.$i.']', $aluno->alunofrequencias[$posFrequencia]->status,Yii::app()->params['statusFreqAluno'])."</td>";
+                                   $posFrequencia++;
+                               }
+                               else
+                               {
+                                   echo " - ";
+                               }
+
                             }
                         }?>
                     </tr>

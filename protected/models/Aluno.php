@@ -49,6 +49,13 @@ class Aluno extends CActiveRecord
 		);
 	}
 
+    protected function beforeSave()
+    {
+        parent::beforeSave();
+        $this->dtNasc = Formatacao::formatData($this->dtNasc,'/','-');
+        return true;
+    }
+
 	/**
 	 * @return array relational rules.
 	 */

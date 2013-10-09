@@ -60,7 +60,6 @@ class AlunoturmaController extends Controller
                     $modelPagamento->save();
                 }
 
-                //TODO: Verifica se tem turma aberta, e inclui o aluno.
 
                 Yii::app()->user->setFlash('success', 'Dados Salvos.');
                 unset(Yii::app()->session['alunoTurma']);

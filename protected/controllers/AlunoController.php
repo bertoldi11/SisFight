@@ -160,6 +160,8 @@ class AlunoController extends Controller
         $abaAtiva = Yii::app()->user->getFlash('abaAtiva');
         $abaAtiva = ($abaAtiva >=0) ? $abaAtiva : 0;
 
+        $model->dtNasc = Formatacao::formatData($model->dtNasc);
+
         $this->render('dadosaluno', array(
             'model'=>$model,
             'modelContato'=>$modelContato,
