@@ -65,7 +65,8 @@ class EnderecoController extends Controller
 
             if(count($modelEnderecos->getData()) == 0){
                 $resposta = Yii::app()->buscaPorCep->run($cep);
-                if(count($resposta > 0))
+
+                if($resposta['result'] != 0)
                 {
                     $cidade = Cidade::model()->findByAttributes(array('nome'=>$resposta['city']));
                     $endereco = new Endereco;
@@ -86,6 +87,11 @@ class EnderecoController extends Controller
                         'uf'=> $endereco->idCidade0->idUf0->sigla
                     );
 
+                }
+                else
+                {
+                    $msg =  'CEP não localizado.';
+                    $enderecos = NULL;
                 }
             }
             else

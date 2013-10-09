@@ -74,16 +74,25 @@ $this->widget('CMaskedTextField', array(
                     type: 'post',
                     data: {CEP: cep},
                 }).done( function ( JSON ){
+                        if(JSON.MSG){
+                            alert(JSON.MSG);
+                        }
+
                         $('#loadingCep').hide();
                         $('#btnBuscarCep').show();
-                        if(JSON.providerEndereco.length == 1)
+
+                        if(JSON.providerEndereco && JSON.providerEndereco.length == 1)
                         {
                             //Preenche dados da divEndereco único
                             preencheEnderecoUnico(JSON.providerEndereco[0]);
                         }
-                        else if(JSON.providerEndereco.length > 1)
+                        else if(JSON.providerEndereco && JSON.providerEndereco.length > 1)
                         {
                             //Abre tela para usuário selecionar endereço.
+                        }
+                        else
+                        {
+                            $('#divEnderecoUnico').hide();
                         }
                     });
             }
