@@ -24,13 +24,51 @@ class PagamentoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index', 'emAberto'),
+                'actions'=>array('novo','alterar','delete','index', 'emAberto','consulta'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionConsulta()
+    {
+        $dados = array('model'=> new ConsultaPagamentoForm);
+
+        if(isset($_POST['ConsultaPagamentoForm']))
+        {
+            $criteria = new CDbCriteria(array(
+                'with'=>array('idAlunoTurma0','idAlunoTurma0.idAluno0'),
+            ));
+
+            if(isset($_POST['ConsultaPagamentoForm']['idAluno']) && $_POST['ConsultaPagamentoForm']['idAluno'] > 0)
+            {
+                $criteria->compare('idAlunoTurma0.idAluno',$_POST['ConsultaPagamentoForm']['idAluno']);
+            }
+
+            if(isset($_POST['ConsultaPagamentoForm']['dtInicio']) && !empty($_POST['ConsultaPagamentoForm']['dtInicio']))
+            {
+                $criteria->compare('dtVencimento','>='.Formatacao::formatData($_POST['ConsultaPagamentoForm']['dtInicio'],'/','-'));
+            }
+
+            if(isset($_POST['ConsultaPagamentoForm']['dataFim']) && !empty($_POST['ConsultaPagamentoForm']['dataFim']))
+            {
+                $criteria->compare('dtVencimento','<='.Formatacao::formatData($_POST['ConsultaPagamentoForm']['dataFim'],'/','-'));
+            }
+
+            if(isset($_POST['ConsultaPagamentoForm']['status']) && !empty($_POST['ConsultaPagamentoForm']['status']))
+            {
+                $criteria->addInCondition('t.status',$_POST['ConsultaPagamentoForm']['status']);
+            }
+
+            $dataProviderPagamentos = new CActiveDataProvider('Pagamento',array('criteria'=>$criteria));
+
+            $dados['dataProviderPagamentos'] = $dataProviderPagamentos;
+        }
+
+        $this->render('consulta',$dados);
     }
 
     private  function montaNomeTurma($model)

@@ -36,9 +36,18 @@ class Formatacao extends CFormatter
 	{	
 		if(empty($data) || is_null($data) || $data == '0000-00-00' || $data == '00/00/0000')
 			return '';
-			
+
+        $novaData = explode(' ',$data);
+        $hora = '';
+        if(count($novaData) > 1)
+        {
+            $data = $novaData[0];
+            $hora = ' '.$novaData[1];
+        }
+
+
 		$date = explode($separador, $data);	
-		return $date[2].$cola.$date[1].$cola.$date[0];
+		return $date[2].$cola.$date[1].$cola.$date[0].$hora;
 	}
 }
 ?>

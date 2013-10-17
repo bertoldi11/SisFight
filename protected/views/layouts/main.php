@@ -69,6 +69,9 @@
                                     array('label'=>'Tipo Contato', 'url'=>array('/tipocontato/index'), 'visible'=>!Yii::app()->user->isGuest),
                                     array('label'=>'Turma', 'url'=>array('/turma/index'), 'visible'=>!Yii::app()->user->isGuest),
                                 )),
+                                array('label'=>'Consulta', 'items'=>array(
+                                    array('label'=>'Pagamento', 'url'=>array('/pagamento/consulta'), 'visible'=>!Yii::app()->user->isGuest),
+                                )),
                                 array('label'=>'Frequencia', 'url'=>array('/turmafrequencia/index'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Pagamento', 'url'=>array('/pagamento/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Usuários', 'url'=>array('/usuario/index'), 'visible'=>!Yii::app()->user->isGuest),
