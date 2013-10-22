@@ -20,6 +20,7 @@ $this->breadcrumbs=array(
             'columns'=>array(
                 array('name'=> 'idAluno', 'header'=>'Código'),
                 array('name'=> 'nome', 'header'=>'Nome'),
+                array('name'=> 'nomeMae', 'header'=>'Nome Mãe'),
                 array(
                     'htmlOptions' => array('nowrap'=>'nowrap'),
                     'class'=>'bootstrap.widgets.TbButtonColumn',

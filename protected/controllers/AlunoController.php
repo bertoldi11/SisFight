@@ -63,6 +63,7 @@ class AlunoController extends Controller
         {
             $model->attributes=$_POST['Aluno'];
             $model->idUsuario = Yii::app()->user->idUsuario;
+
             if ($model -> save())
             {
                 Yii::app()->user->setFlash('success', 'Dados Salvos.');
@@ -96,12 +97,14 @@ class AlunoController extends Controller
         if(isset($_POST['Aluno']))
         {
             $model->attributes=$_POST['Aluno'];
+            if(isset($_POST['Aluno']['idEndereco']))
+            {
+                Yii::app()->user->setFlash('abaAtiva', 2);
+                $model->salvandoEndereco = true;
+            }
+
             if ($model -> save())
             {
-                if(isset($_POST['Usuario']['idEndereco']))
-                {
-                    Yii::app()->user->setFlash('abaAtiva', 2);
-                }
                 Yii::app()->user->setFlash('success', 'Dados Alterados.');
             }
         }

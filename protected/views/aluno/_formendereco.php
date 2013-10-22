@@ -47,7 +47,7 @@ $this->widget('CMaskedTextField', array(
             <input id="inputCidadeEstado" name="cidade" readonly="true" value="<?php if(!is_null($modelEndereco)) echo $modelEndereco->idCidade0->nome.' - '.$modelEndereco->idCidade0->idUf0->sigla;?>" />
         </div>
     </div>
-
+    <input type="hidden" name="Aluno[idEndereco]" value="<?php echo $modelAluno->idEndereco?>" />
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(

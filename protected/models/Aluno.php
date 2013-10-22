@@ -21,8 +21,10 @@
  * @property Alunofrequencia[] $alunofrequencias
  * @property Alunoturma[] $alunoturmas
  */
+
 class Aluno extends CActiveRecord
 {
+    public $salvandoEndereco = false;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -52,7 +54,8 @@ class Aluno extends CActiveRecord
     protected function beforeSave()
     {
         parent::beforeSave();
-        $this->dtNasc = Formatacao::formatData($this->dtNasc,'/','-');
+        if(!$this->salvandoEndereco)
+            $this->dtNasc = Formatacao::formatData($this->dtNasc,'/','-');
         return true;
     }
 
@@ -106,7 +109,9 @@ class Aluno extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria=new CDbCriteria(array(
+            'order'=>'nome'
+        ));
 
 		$criteria->compare('idAluno',$this->idAluno);
 		$criteria->compare('idUsuario',$this->idUsuario);
