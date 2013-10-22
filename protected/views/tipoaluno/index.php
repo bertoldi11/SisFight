@@ -15,7 +15,8 @@ $this->breadcrumbs=array(
             'columns'=>array(
                 array('name'=> 'idTipoAluno', 'header'=>'Código'),
                 array('name'=> 'descricao', 'header'=>'Descrição'),
-               // array('name'=> 'status', 'header'=>'Status', 'value'=>'($data->status == "A") ? "Ativo" : "Inativo"'),
+                array('name'=> 'quantParcelas', 'header'=>'Quant. Parcelas'),
+                array('name'=> 'geraPagamento', 'header'=>'Gera Pagamento', 'value'=>'($data->geraPagamento == "S") ? "Sim" : "Não"'),
                 array(
                     'htmlOptions' => array('nowrap'=>'nowrap'),
                     'class'=>'bootstrap.widgets.TbButtonColumn',

@@ -75,7 +75,7 @@ class TipoalunoController extends Controller
             if ($model -> save())
             {
                 Yii::app()->user->setFlash('success', 'Dados Alterados.');
-                $this->redirect($this->createUrl('tipocontato/index'));
+                $this->redirect($this->createUrl('tipoaluno/index'));
             }
         }
 

@@ -92,6 +92,7 @@ return array(
         // this is used in contact page
         'adminEmail'=>'webmaster@example.com',
         'status'=>array('A'=>'Ativo', 'I'=>'Inativo'),
+        'sim_nao'=>array('S'=>'Sim', 'N'=>'Não'),
         'idMensalista'=>1,
         'tipoCobranca'=> 2, //1 - Turma | 2 - Modalidade,
         'meses'=>array('01'=>'Janeiro','02'=>'Fevereiro','03'=>'Março','04'=>'Abril','05'=>'Maio','06'=>'Junho',

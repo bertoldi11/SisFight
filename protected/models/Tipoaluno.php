@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'tipoaluno':
  * @property integer $idTipoAluno
  * @property string $descricao
+ * @property integer $quantParcelas
+ * @property string $geraPagamento
  *
  * The followings are the available model relations:
  * @property Alunoturma[] $alunoturmas
@@ -28,10 +30,13 @@ class Tipoaluno extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('descricao', 'length', 'max'=>45),
+            array('descricao, quantParcelas, geraPagamento', 'required'),
+            array('quantParcelas', 'numerical', 'integerOnly'=>true),
+            array('descricao', 'length', 'max'=>20),
+            array('geraPagamento', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idTipoAluno, descricao', 'safe', 'on'=>'search'),
+			array('idTipoAluno, descricao, quantParcelas, geraPagamento', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +59,9 @@ class Tipoaluno extends CActiveRecord
 	{
 		return array(
 			'idTipoAluno' => 'Id Tipo Aluno',
-			'descricao' => 'Descricao',
+			'descricao' => 'Descrição',
+            'quantParcelas' => 'Quant. Parcelas',
+            'geraPagamento' => 'Gera Pagamento',
 		);
 	}
 
@@ -78,6 +85,8 @@ class Tipoaluno extends CActiveRecord
 
 		$criteria->compare('idTipoAluno',$this->idTipoAluno);
 		$criteria->compare('descricao',$this->descricao,true);
+        $criteria->compare('quantParcelas',$this->quantParcelas);
+        $criteria->compare('geraPagamento',$this->geraPagamento,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
