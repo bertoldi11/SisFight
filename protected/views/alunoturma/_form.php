@@ -21,10 +21,10 @@
     <div class="pull-left  span2">
 	    <?php echo $form->dropdownListRow($model,'idTipoAluno',$modelTiposAluno,array('class'=>'span12', 'prompt'=>'selecione')); ?>
     </div>
-    <div class="pull-left  span2">
+    <div class="pull-left  span1">
 	    <?php echo $form->textFieldRow($model,'valor',array('class'=>'span12','maxlength'=>6)); ?>
     </div>
-    <div class="pull-left  span2">
+    <div class="pull-left  span1">
         <?php echo $form->dropdownListRow($model,'status',Yii::app()->params['status'],array('class'=>'span12','maxlength'=>6)); ?>
     </div>
     <div class="pull-left  span2" style="padding-top: 25px;">

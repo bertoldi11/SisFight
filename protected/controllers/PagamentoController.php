@@ -176,16 +176,40 @@ class PagamentoController extends Controller
                 {
                     $dados['MSG'] = "Pagamento efetuado.";
 
-                    $modelPagamento = new Pagamento;
-                    $modelPagamento->attributes = array(
-                        'idAlunoTurma'=>$model->idAlunoTurma,
-                        'idUsuario'=>Yii::app()->user->idUsuario,
-                        'valorPagar'=>$model->valorPagar,
-                        'dtCadastro'=> new CDbExpression('NOW()'),
-                        'dtVencimento'=>new CDbExpression('DATE_ADD("'.$model->dtVencimento.'",INTERVAL 1 MONTH)'),
-                    );
+                    $criteriaAlunoTurma = new CDbCriteria(array(
+                        'condition'=>'idAlunoTurma = :idAlunoTurma',
+                        'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma),
+                        'with'=>array('idTipoAluno0'=>array('select'=>'quantParcelas'))
+                    ));
+                    $modelAlunoTurma = Alunoturma::model()->find($criteriaAlunoTurma);
 
-                    $modelPagamento->save();
+                    if($modelAlunoTurma->idTipoAluno0->quantParcelas == 1)
+                    {
+                        $modelPagamento = new Pagamento;
+                        $modelPagamento->attributes = array(
+                            'idAlunoTurma'=>$model->idAlunoTurma,
+                            'idUsuario'=>Yii::app()->user->idUsuario,
+                            'valorPagar'=>$model->valorPagar,
+                            'dtCadastro'=> new CDbExpression('NOW()'),
+                            'dtVencimento'=>new CDbExpression('DATE_ADD("'.$model->dtVencimento.'",INTERVAL 1 MONTH)'),
+                        );
+
+                        $modelPagamento->save();
+                    }
+                    else
+                    {
+                        $criteriaParcAberta = new CDbCriteria(array(
+                            'condition'=>'idAlunoTurma = :idAlunoTurma AND status = "A"',
+                            'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma)
+                        ));
+
+                        $quantPgAberto = Pagamento::model()->count($criteriaParcAberta);
+                        if($quantPgAberto == 0)
+                        {
+                            $dados['ULTIMO_PGTO'] = true;
+                            $dados['URL']= $this->createUrl('alunoturma/renovar', array('id'=>$model->idAlunoTurma));
+                        }
+                    }
                 }
             }
             else

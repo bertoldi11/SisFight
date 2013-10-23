@@ -21,7 +21,7 @@ class AlunoturmaController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index','buscarporaluno'),
+                'actions'=>array('novo','alterar','delete','index','buscarporaluno','renovar'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -45,19 +45,32 @@ class AlunoturmaController extends Controller
             $model->idAluno = $id;
             if($model->save())
             {
-                //Gera primeiro pagamento no dia atual para alunos mensalistas.
-                if($model->idTipoAluno == Yii::app()->params['idMensalista'])
-                {
-                    $modelPagamento = new Pagamento;
-                    $modelPagamento->attributes = array(
-                        'idAlunoTurma'=>$model->idAlunoTurma,
-                        'idUsuario'=>Yii::app()->user->idUsuario,
-                        'valorPagar'=>$model->valor,
-                        'dtCadastro'=> new CDbExpression('NOW()'),
-                        'dtVencimento'=>new CDbExpression('NOW()'),
-                    );
+               $criteriaTipoAluno = new CDbCriteria(array(
+                   'select'=>'geraPagamento, quantParcelas',
+                   'condition'=>'idTipoAluno = :idTipoAluno',
+                   'params'=>array(':idTipoAluno'=>$model->idTipoAluno)
+               ));
 
-                    $modelPagamento->save();
+                $modelTipoAluno = Tipoaluno::model()->find($criteriaTipoAluno);
+
+                if($modelTipoAluno->geraPagamento == 'S')
+                {
+                    if($modelTipoAluno->quantParcelas > 0 )
+                    {
+                        for($i=0;$i < $modelTipoAluno->quantParcelas; $i++)
+                        {
+                            $vencimento = ($i==0) ? new CDbExpression('NOW()'): new CDbExpression("DATE_ADD(NOW(), INTERVAL ".$i. " MONTH)");
+                            $novoPagamento = new Pagamento;
+                            $novoPagamento->attributes = array(
+                                'idAlunoTurma'=>$model->idAlunoTurma,
+                                'valorPagar'=>$model->valor,
+                                'dtCadastro'=>new CDbExpression('NOW()'),
+                                'dtVencimento'=>$vencimento,
+                                'idUsuario'=>Yii::app()->user->idUsuario
+                            );
+                            $novoPagamento->save();
+                        }
+                    }
                 }
 
 
@@ -107,6 +120,11 @@ class AlunoturmaController extends Controller
 
         Yii::app()->user->setFlash('abaAtiva', 3);
         $this->redirect($this->createUrl('aluno/alterar', array('id'=>$id)));
+    }
+
+    public function actionRenovar($id)
+    {
+        //Montar tela de renovação de planos.
     }
 
     /**
