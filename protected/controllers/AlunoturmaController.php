@@ -124,7 +124,7 @@ class AlunoturmaController extends Controller
 
     public function actionRenovar($id)
     {
-        //Montar tela de renovação de planos.
+        $this->render('renovar');
     }
 
     /**

@@ -13,19 +13,16 @@
             <?php echo $form->dropdownListRow($model,'idTurma',$turmas,array('class'=>'span12', 'prompt'=>'Selecione')); ?>
         </div>
         <div class="pull-left span2">
-            <?php echo $form->dropdownListRow($model,'mes',Yii::app()->params['meses'],array('class'=>'span12', 'prompt'=>'Selecione')); ?>
+            <?php echo $form->datePickerRow($model,'data',array('class'=>'span12',
+                'options' => array('language' => 'pt','format'=>'dd/mm/yyyy', 'changeMonth'=>true,'changeYear'=>true),
+                'prepend' => '<i class="icon-calendar"></i>',)); ?>
         </div>
-        <div class="pull-left span2">
-            <?php echo $form->dropdownListRow($model,'ano',Yii::app()->params['anos'],array('class'=>'span12', 'prompt'=>'Selecione')); ?>
-        </div>
-    </div>
-    <div class="clearfix">
-        <div class="form-actions">
+        <div class="pull-left span2" style="margin-top: 25px;">
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'buttonType'=>'submit',
-                    'type'=>'primary',
-                    'label'=>'Salvar',
-                )); ?>
+                'buttonType'=>'submit',
+                'type'=>'primary',
+                'label'=>'Salvar',
+            )); ?>
         </div>
     </div>
 <?php $this->endWidget(); ?>

@@ -6,18 +6,13 @@ $this->breadcrumbs=array(
 <div class="box-content span11">
     <fieldset>
         <legend>Frequencia</legend>
-        <?php $this->widget('bootstrap.widgets.TbButton',
-            array(
-                'label' => 'Abrir caléndario',
-                'type' => 'primary',
-                'url'=>$this->createUrl('turmafrequencia/novo'),
-            )
-        ); ?>
+        <?php echo $this->renderPartial('_form', array('model'=>$model,'turmas'=>$turmas)); ?>
         <hr>
         <?php $this->widget('bootstrap.widgets.TbGridView', array(
             'type'=>'striped bordered condensed',
             'template'=>"{items}",
             'dataProvider'=>$dataProvider,
+            'formatter'=>new Formatacao,
             'columns'=>array(
                 array('name'=> 'idTurmaFrequencia', 'header'=>'Código'),
                 array(
@@ -25,8 +20,7 @@ $this->breadcrumbs=array(
                     'header'=>'Turma',
                     'value'=>'$data->idTurma0->idModalidade0->descricao." - ".substr($data->idTurma0->inicio,0,5)." às ".substr($data->idTurma0->termino,0,5)',
                 ),
-                array('name'=> 'mes', 'header'=>'Mês'),
-                array('name'=> 'ano', 'header'=>'Ano'),
+                array('name'=> 'data', 'header'=>'Data', 'type'=>'data'),
                 array('name'=> 'status', 'header'=>'Status', 'value'=>'($data->status == "A") ? "Aberto" : "Fechado"'),
                 array(
                     'htmlOptions' => array('nowrap'=>'nowrap'),

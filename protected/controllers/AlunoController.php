@@ -36,7 +36,19 @@ class AlunoController extends Controller
     public function actionBuscar()
     {
         $retorno = array();
-        $criteria = new CDbCriteria;
+        if(isset($_GET['idModalidade']))
+        {
+            $criteria = new CDbCriteria(array(
+                'with'=>array('alunoturmas'=>array(
+                    'condition'=>'idModalidade = :idModalidade',
+                    'params'=>array(':idModalidade'=>$_GET['idModalidade'])
+                ))
+            ));
+        }
+        else
+        {
+            $criteria = new CDbCriteria;
+        }
         $criteria->compare('nome',$_GET['term'],true);
 
         $alunos = Aluno::model()->findAll($criteria);

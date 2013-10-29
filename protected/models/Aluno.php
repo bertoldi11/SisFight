@@ -15,10 +15,10 @@
  * @property string $endComplemento
  *
  * The followings are the available model relations:
- * @property Endereco $idEndereco0
  * @property Usuario $idUsuario0
+ * * @property Endereco $idEndereco0
  * @property Alunocontato[] $alunocontatos
- * @property Alunofrequencia[] $alunofrequencias
+ * @property Turmafrequencia[] $turmafrequencias
  * @property Alunoturma[] $alunoturmas
  */
 
@@ -70,7 +70,7 @@ class Aluno extends CActiveRecord
             'idEndereco0' => array(self::BELONGS_TO, 'Endereco', 'idEndereco'),
 			'idUsuario0' => array(self::BELONGS_TO, 'Usuario', 'idUsuario'),
 			'alunocontatos' => array(self::HAS_MANY, 'Alunocontato', 'idAluno'),
-            'alunofrequencias' => array(self::HAS_MANY, 'Alunofrequencia', 'idAluno'),
+            'turmafrequencias' => array(self::MANY_MANY, 'Turmafrequencia', 'alunofrequencia(idAluno, idTurmaFrequencia)'),
 			'alunoturmas' => array(self::HAS_MANY, 'Alunoturma', 'idAluno'),
 		);
 	}

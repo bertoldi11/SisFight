@@ -6,12 +6,11 @@
  * The followings are the available columns in table 'turmafrequencia':
  * @property integer $idTurmaFrequencia
  * @property integer $idTurma
- * @property integer $mes
- * @property integer $ano
+ * @property string $data
  * @property string $status
  *
  * The followings are the available model relations:
- * @property Alunofrequencia[] $alunofrequencias
+ * @property Aluno[] $alunos
  * @property Turma $idTurma0
  */
 class Turmafrequencia extends CActiveRecord
@@ -32,12 +31,12 @@ class Turmafrequencia extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idTurma, mes, ano', 'required'),
-			array('idTurma, mes, ano', 'numerical', 'integerOnly'=>true),
+			array('idTurma, data', 'required'),
+			array('idTurma', 'numerical', 'integerOnly'=>true),
 			array('status', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idTurmaFrequencia, idTurma, mes, ano, status', 'safe', 'on'=>'search'),
+			array('idTurmaFrequencia, idTurma, data, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +48,7 @@ class Turmafrequencia extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'alunofrequencias' => array(self::HAS_MANY, 'Alunofrequencia', 'idTurmaFrequencia'),
+			'alunos' => array(self::MANY_MANY, 'Aluno', 'alunofrequencia(idTurmaFrequencia, idAluno)'),
 			'idTurma0' => array(self::BELONGS_TO, 'Turma', 'idTurma'),
 		);
 	}
@@ -62,11 +61,17 @@ class Turmafrequencia extends CActiveRecord
 		return array(
 			'idTurmaFrequencia' => 'Id Turma Frequencia',
 			'idTurma' => 'Turma',
-			'mes' => 'Mês',
-			'ano' => 'Ano',
+			'data' => 'Data',
 			'status' => 'Status',
 		);
 	}
+
+    protected function beforeSave()
+    {
+        parent::beforeSave();
+        $this->data = Formatacao::formatData($this->data,'/','-');
+        return true;
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -88,8 +93,7 @@ class Turmafrequencia extends CActiveRecord
 
 		$criteria->compare('idTurmaFrequencia',$this->idTurmaFrequencia);
 		$criteria->compare('idTurma',$this->idTurma);
-		$criteria->compare('mes',$this->mes);
-		$criteria->compare('ano',$this->ano);
+        $criteria->compare('data',$this->data,true);
 		$criteria->compare('status',$this->status,true);
 
 		return new CActiveDataProvider($this, array(

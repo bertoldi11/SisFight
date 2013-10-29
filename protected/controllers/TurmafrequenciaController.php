@@ -2,6 +2,7 @@
 
 class TurmafrequenciaController extends Controller
 {
+    public $_model = null;
     /**
      * @return array action filters
      */
@@ -21,13 +22,38 @@ class TurmafrequenciaController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index'),
+                'actions'=>array('novo','alterar','delete','index','adicionarAluno'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionAdicionarAluno()
+    {
+        $dados = array();
+        $model = new Alunofrequencia;
+        $model->attributes = array(
+            'idTurmaFrequencia'=>$_POST['idTurmaFrequencia'],
+            'idAluno'=>$_POST['idAluno']
+        );
+
+        if($model->save())
+        {
+            $dados['CONTINUAR'] = true;
+        }
+        else
+        {
+            $dados['CONTINUAR'] = false;
+            $dados['MSG'] = 'Erro ao adicionar aluno.';
+        }
+
+        echo CJSON::encode($dados);
+
+        Yii::app()->end();
+
     }
 
     /**
@@ -40,85 +66,20 @@ class TurmafrequenciaController extends Controller
 
         if(isset($_POST['Turmafrequencia']))
         {
-            $model->attributes=$_POST['Turmafrequencia'];
-            $criteriaVerifica = new CDbCriteria(array(
-                'condition'=>'status = "A" AND idTurma = :idTurma',
-                'params'=>array(':idTurma'=>$_POST['Turmafrequencia']['idTurma'])
-            ));
-            if(Turmafrequencia::model()->count($criteriaVerifica) == 0)
+            $model->attributes = $_POST['Turmafrequencia'];
+
+            if($model->save())
             {
-                if($model->save())
-                {
-                    if(Yii::app()->params['tipoCobranca'] == 1)
-                    {
-                       //Seleciona todos os alunos da turma
-                        $criteriaAluno = new CDbCriteria(array(
-                            'condition'=>'t.status = "A" AND idTurma = :idTurma',
-                            'params'=>array(':idTurma'=>$model->idTurma),
-                        ));
-                    }
-                    else
-                    {
-                        //Seleciona todos os alunos da modalidade
-                        $criteriaModalidade = new CDbCriteria(array(
-                            'select'=>'idModalidade',
-                            'condition'=>'idTurma = :idTurma',
-                            'params'=>array(':idTurma'=>$model->idTurma),
-                        ));
-
-                        $modelModalidade = Turma::model()->find($criteriaModalidade);
-
-                        $criteriaAluno = new CDbCriteria(array(
-                            'condition'=>'t.status = "A" AND idModalidade = :idModalidade',
-                            'params'=>array(':idModalidade'=>$modelModalidade->idModalidade),
-                        ));
-
-                        unset($modelModalidade);
-                        unset($criteriaModalidade);
-                    }
-                    $alunos = Alunoturma::model()->findAll($criteriaAluno);
-                    if(count($alunos) > 0)
-                    {
-                        for($i = 1; $i <= 31; $i++)
-                        {
-                            $diaSemana = date('N',mktime(0,0,0,$model->mes,$i,$model->ano));
-                            if($diaSemana >= 1 && $diaSemana<=5)
-                            {
-                                foreach($alunos as $aluno)
-                                {
-                                    $modelAlunoFrequencia = new Alunofrequencia;
-                                    $modelAlunoFrequencia->attributes = array(
-                                        'idTurmaFrequencia'=>$model->idTurmaFrequencia,
-                                        'idAluno'=>$aluno->idAluno,
-                                        'dia'=>$i,
-                                        'status'=>'N'
-                                    );
-                                    $modelAlunoFrequencia->save();
-                                }
-                            }
-                        }
-                    }
-                    Yii::app()->user->setFlash('success', 'Turma Criada.');
-                    $this->redirect($this->createUrl('turmafrequencia/index'));
-                }
+                $this->redirect($this->createUrl('turmafrequencia/alterar', array('id'=>$model->idTurmaFrequencia)));
             }
             else
             {
-                $model->addError('idTurma','Existe uma frequência aberta para essa Turma.');
+                $this->_model = $model;
             }
         }
 
-        $criteriaTurma = new CDbCriteria(array(
-            'condition'=>'t.status = "A"',
-            'with'=>array('idModalide0')
-        ));
-        $turmas = CHtml::listData(Turma::model()->findAll(),'idTurma', function($turma){
-            return CHtml::encode($turma->idModalidade0->descricao.' - '.substr($turma->inicio,0,5).' às '.substr($turma->termino,0,5));
-        });
-        $this->render('novo',array(
-            'model'=>$model,
-            'turmas'=>$turmas
-        ));
+        $this->redirect($this->createUrl('turmafrequencia/index'));
+
     }
 
     /**
@@ -133,19 +94,16 @@ class TurmafrequenciaController extends Controller
             'params'=>array(':idTurmaFrequencia'=>$id),
             'with'=>array('idTurma0','idTurma0.idModalidade0')
         ));
+
         $criteriaAlunos = new CDbCriteria(array(
-            'with'=>array(
-                'alunofrequencias'=>array(
-                    'condition'=>'idTurmaFrequencia = :idTurmaFrequencia',
-                    'params'=>array(':idTurmaFrequencia'=>$id),
-                    'order'=>'dia'
-                )
-            ),
-            'order'=>'nome'
+            'with'=>array('turmafrequencias'=>array(
+                'condition'=>'turmafrequencias.idTurmaFrequencia = :idTurmaFrequencia',
+                'params'=>array(':idTurmaFrequencia'=>$id)
+            )),
         ));
 
-        $cabecalho = Turmafrequencia::model()->find($criteriaCabecalho);
         $alunos = Aluno::model()->findAll($criteriaAlunos);
+        $cabecalho = Turmafrequencia::model()->find($criteriaCabecalho);
 
         $this->render('frequencia', array(
             'cabecalho'=>$cabecalho,
@@ -183,8 +141,16 @@ class TurmafrequenciaController extends Controller
                 'with'=>array('idTurma0','idTurma0.idModalidade0')
             ),
         ));
+
+        $turmas = CHtml::listData(Turma::model()->findAll(),'idTurma', function($turma){
+            return CHtml::encode($turma->idModalidade0->descricao.' - '.substr($turma->inicio,0,5).' às '.substr($turma->termino,0,5));
+        });
+
+        $model=(is_null($this->_model)) ? new Turmafrequencia : $this->_model;
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
+            'model'=>$model,
+            'turmas'=>$turmas
         ));
     }
 
