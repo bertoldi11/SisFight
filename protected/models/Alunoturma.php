@@ -11,6 +11,7 @@
  * @property integer $idModalidade
  * @property string $valor
  * @property string $status
+ * @property string $dtPrimeiroPgto
  *
  * The followings are the available model relations:
  * @property Aluno $idAluno0
@@ -41,9 +42,10 @@ class Alunoturma extends CActiveRecord
 			array('idAluno, idTipoAluno, idTurma, idModalidade', 'numerical', 'integerOnly'=>true),
 			array('valor', 'length', 'max'=>6),
 			array('status', 'length', 'max'=>1),
+            array('dtPrimeiroPgto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idAlunoTurma, idAluno, idTipoAluno, idTurma, idModalidade, valor, status', 'safe', 'on'=>'search'),
+			array('idAlunoTurma, idAluno, idTipoAluno, idTurma, idModalidade, valor, status, dtPrimeiroPgto', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +65,13 @@ class Alunoturma extends CActiveRecord
 		);
 	}
 
+    protected function beforeSave()
+    {
+        parent::beforeSave();
+        $this->dtPrimeiroPgto = Formatacao::formatData($this->dtPrimeiroPgto,'/','-');
+        return true;
+    }
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -76,6 +85,7 @@ class Alunoturma extends CActiveRecord
 			'idModalidade' => 'Modalidade',
 			'valor' => 'Valor',
 			'status' => 'Status',
+            'dtPrimeiroPgto' => '1º Pagamento',
 		);
 	}
 
@@ -104,6 +114,7 @@ class Alunoturma extends CActiveRecord
 		$criteria->compare('idModalidade',$this->idModalidade);
 		$criteria->compare('valor',$this->valor,true);
 		$criteria->compare('status',$this->status,true);
+        $criteria->compare('dtPrimeiroPgto',$this->dtPrimeiroPgto,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

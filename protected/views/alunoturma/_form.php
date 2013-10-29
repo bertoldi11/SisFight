@@ -21,8 +21,15 @@
     <div class="pull-left  span2">
 	    <?php echo $form->dropdownListRow($model,'idTipoAluno',$modelTiposAluno,array('class'=>'span12', 'prompt'=>'selecione')); ?>
     </div>
+    <div class="pull-left" style="margin-left: 20px;">
+	    <?php echo $form->datePickerRow($model,'dtPrimeiroPgto',array(
+            'options' => array('language' => 'pt','format'=>'dd/mm/yyyy', 'changeMonth'=>true,'changeYear'=>true),
+            'prepend' => '<i class="icon-calendar"></i>',
+            'class'=>'input-small'
+        )); ?>
+    </div>
     <div class="pull-left  span1">
-	    <?php echo $form->textFieldRow($model,'valor',array('class'=>'span12','maxlength'=>6)); ?>
+        <?php echo $form->textFieldRow($model,'valor',array('class'=>'span12','maxlength'=>6)); ?>
     </div>
     <div class="pull-left  span1">
         <?php echo $form->dropdownListRow($model,'status',Yii::app()->params['status'],array('class'=>'span12','maxlength'=>6)); ?>

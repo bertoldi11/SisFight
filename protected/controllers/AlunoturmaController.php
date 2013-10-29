@@ -59,7 +59,7 @@ class AlunoturmaController extends Controller
                     {
                         for($i=0;$i < $modelTipoAluno->quantParcelas; $i++)
                         {
-                            $vencimento = ($i==0) ? new CDbExpression('NOW()'): new CDbExpression("DATE_ADD(NOW(), INTERVAL ".$i. " MONTH)");
+                            $vencimento = ($i==0) ? $model->dtPrimeiroPgto : new CDbExpression("DATE_ADD(NOW(), INTERVAL ".$i. " MONTH)");
                             $novoPagamento = new Pagamento;
                             $novoPagamento->attributes = array(
                                 'idAlunoTurma'=>$model->idAlunoTurma,
