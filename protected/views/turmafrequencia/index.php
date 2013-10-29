@@ -31,7 +31,7 @@ $this->breadcrumbs=array(
                             'label'=>'Lançar presença',
                             'url'=>'Yii::app()->createUrl("turmafrequencia/alterar", array("id"=>"$data->idTurmaFrequencia"))',
                             'icon'=>'calendar',
-                            'visible'=>'true',
+                            'visible'=>'$data->status == "A"',
                         )
                     )
                 )

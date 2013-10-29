@@ -69,7 +69,8 @@ class Turmafrequencia extends CActiveRecord
     protected function beforeSave()
     {
         parent::beforeSave();
-        $this->data = Formatacao::formatData($this->data,'/','-');
+        if($this->scenario == 'insert')
+            $this->data = Formatacao::formatData($this->data,'/','-');
         return true;
     }
 

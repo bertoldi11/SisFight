@@ -22,13 +22,49 @@ class TurmafrequenciaController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index','adicionarAluno'),
+                'actions'=>array('novo','alterar','delete','index','adicionarAluno', 'excluirAluno','fechar'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionFechar($id)
+    {
+        $model = $this->loadModel($id);
+        $model->status = 'F';
+
+        $model->save();
+        Yii::app()->user->setFlash('success', 'Frequencia fechada.');
+        $this->redirect($this->createUrl('turmafrequencia/index'));
+    }
+
+    public function actionExcluirALuno()
+    {
+        $dados = array();
+
+
+        $criteriaExcluir = new CDbCriteria(array(
+            'condition'=>'idAluno = :idAluno AND idTurmaFrequencia = :idTurmaFrequencia',
+            'params'=>array(':idAluno'=>$_GET['idAluno'], ':idTurmaFrequencia'=>$_GET['idTurmaFrequencia'])
+        ));
+
+        if(Alunofrequencia::model()->find($criteriaExcluir)->delete())
+        {
+            $dados['MSG'] = 'Aluno excluído da frequencia.';
+            $dados['CONTINUAR'] = true;
+        }
+        else
+        {
+            $dados['MSG'] = 'Erro ao excluir';
+            $dados['CONTINUAR'] = false;
+        }
+
+        echo CJSON::encode($dados);
+
+        Yii::app()->end();
     }
 
     public function actionAdicionarAluno()
