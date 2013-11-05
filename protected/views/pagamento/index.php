@@ -120,7 +120,7 @@ $this->breadcrumbs=array(
                             $(linha).append('<td style="text-align: right;">'+JSON.PAGAMENTOS[i].valorPagar+'</td>');
                             $(linha).append('<td><input type="text" name="valorPago['+JSON.PAGAMENTOS[i].idPagamento+']" /> </td>');
                             $(linha).append('<td><a class="pagarTurma" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-money"></i> </td>');
-                            $(linha).append('<td><a class="cancelarPagamento" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-ban-circle"></i> </td>');
+                            // $(linha).append('<td><a class="cancelarPagamento" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-ban-circle"></i> </td>');
                             $('#tbodyTurma').append(linha);
                         }
                         $('#divTurmas').show();
