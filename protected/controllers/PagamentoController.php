@@ -63,7 +63,7 @@ class PagamentoController extends Controller
                 $criteria->addInCondition('t.status',$_POST['ConsultaPagamentoForm']['status']);
             }
 
-            $dataProviderPagamentos = new CActiveDataProvider('Pagamento',array('criteria'=>$criteria));
+            $dataProviderPagamentos = new CActiveDataProvider('Pagamento',array('criteria'=>$criteria,'pagination'=>false));
 
             $dados['dataProviderPagamentos'] = $dataProviderPagamentos;
         }
