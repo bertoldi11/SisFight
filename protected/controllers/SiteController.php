@@ -27,9 +27,16 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+        $criteria = new CDbCriteria(array(
+            'condition'=>'dtVencimento <= NOW() AND t.status = "A"',
+            'with'=>array('idAlunoTurma0','idAlunoTurma0.idAluno0'),
+        ));
+
+        $dataProviderPagamentosAberto = new CActiveDataProvider('Pagamento',array('criteria'=>$criteria,'pagination'=>false));
+
+		$this->render('index', array(
+            'dataProviderAberto'=>$dataProviderPagamentosAberto
+        ));
 	}
 
 	/**
