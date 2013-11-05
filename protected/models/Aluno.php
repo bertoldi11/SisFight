@@ -107,8 +107,6 @@ class Aluno extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria(array(
             'order'=>'nome'
         ));
@@ -125,6 +123,7 @@ class Aluno extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+            'pagination'=>false
 		));
 	}
 

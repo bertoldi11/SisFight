@@ -48,9 +48,9 @@ class PagamentoController extends Controller
                 $criteria->compare('idAlunoTurma0.idAluno',$_POST['ConsultaPagamentoForm']['idAluno']);
             }
 
-            if(isset($_POST['ConsultaPagamentoForm']['dtInicio']) && !empty($_POST['ConsultaPagamentoForm']['dtInicio']))
+            if(isset($_POST['ConsultaPagamentoForm']['dataInicio']) && !empty($_POST['ConsultaPagamentoForm']['dataInicio']))
             {
-                $criteria->compare('dtVencimento','>='.Formatacao::formatData($_POST['ConsultaPagamentoForm']['dtInicio'],'/','-'));
+                $criteria->compare('dtVencimento','>='.Formatacao::formatData($_POST['ConsultaPagamentoForm']['dataInicio'],'/','-'));
             }
 
             if(isset($_POST['ConsultaPagamentoForm']['dataFim']) && !empty($_POST['ConsultaPagamentoForm']['dataFim']))
