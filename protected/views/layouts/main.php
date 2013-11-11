@@ -64,16 +64,22 @@
 								array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cadastro', 'items'=>array(
                                     array('label'=>'Aluno', 'url'=>array('/aluno/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                    array('label'=>'Banco', 'url'=>array('/banco/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                    array('label'=>'Conta', 'url'=>array('/conta/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                    array('label'=>'Forma Pgto', 'url'=>array('/formapgto/index'), 'visible'=>!Yii::app()->user->isGuest),
                                     array('label'=>'Modalidades', 'url'=>array('/modalidade/index'), 'visible'=>!Yii::app()->user->isGuest),
                                     array('label'=>'Tipo Aluno', 'url'=>array('/tipoaluno/index'), 'visible'=>!Yii::app()->user->isGuest),
                                     array('label'=>'Tipo Contato', 'url'=>array('/tipocontato/index'), 'visible'=>!Yii::app()->user->isGuest),
                                     array('label'=>'Turma', 'url'=>array('/turma/index'), 'visible'=>!Yii::app()->user->isGuest),
                                 )),
-                                array('label'=>'Consulta', 'items'=>array(
-                                    array('label'=>'Pagamento', 'url'=>array('/pagamento/consulta'), 'visible'=>!Yii::app()->user->isGuest),
+                                array('label'=>'Contas', 'items'=>array(
+                                    array('label'=>'Pagamentos Alunos', 'url'=>array('/pagamento/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                    array('label'=>'Contas a Pagar', 'url'=>array('/pagamento/contaspagar'), 'visible'=>!Yii::app()->user->isGuest),
                                 )),
-                                array('label'=>'Frequencia', 'url'=>array('/turmafrequencia/index'), 'visible'=>!Yii::app()->user->isGuest),
-                                array('label'=>'Pagamento', 'url'=>array('/pagamento/index'), 'visible'=>!Yii::app()->user->isGuest),
+                                array('label'=>'Consulta', 'items'=>array(
+                                    array('label'=>'Contas Pagar/Receber', 'url'=>array('/pagamento/consulta'), 'visible'=>!Yii::app()->user->isGuest),
+                                )),
+                                array('label'=>'Frequência', 'url'=>array('/turmafrequencia/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Usuários', 'url'=>array('/usuario/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 								array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)

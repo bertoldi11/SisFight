@@ -24,13 +24,63 @@ class PagamentoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index', 'emAberto','consulta'),
+                'actions'=>array('novo','alterar','delete','index', 'emAberto','consulta', 'contasPagar', 'montaForm'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionMontaForm()
+    {
+        $model = $this->loadModel($_POST['idPagamento']);
+        $formasPgto = CHtml::listData(Formapgto::model()->findAll('status = "A"'),'idFormaPgto','descricao');
+        $bancos = CHtml::listData(Banco::model()->findAll(), 'idBanco', 'nome');
+
+        if($model->tipo == 'C')
+        {
+            $criteriaCabecalho = new CDbCriteria(array(
+                'condition'=>'t.idAlunoTurma = :idAlunoTurma',
+                'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma),
+                'with'=>array('idAluno0','idModalidade0')
+            ));
+
+            $cabecalho = Alunoturma::model()->find($criteriaCabecalho);
+        }
+        else
+        {
+            $cabecalho = Conta::model()->find('idConta = :idConta', array(':idConta'=>$model->idConta));
+        }
+
+        $this->renderPartial('_form_pagamento', array(
+            'model'=>$model,
+            'formasPgto'=>$formasPgto,
+            'modelCheque'=>new Cheque,
+            'bancos'=>$bancos,
+            'cabecalho'=>$cabecalho
+        ));
+    }
+
+    public function actionContasPagar()
+    {
+        $model = new Pagamento;
+        $modelContas = CHtml::listData(Conta::model()->findAll(),'idConta','nome');
+        $modelFormasPgto = CHtml::listData(Formapgto::model()->findAll(),'idFormaPgto','descricao');
+        $criteriaContasPagar = new CDbCriteria(array(
+            'condition'=>'tipo = "D" AND status="A"',
+            'with'=>array('idConta0'),
+            'order'=>'dtVencimento'
+        ));
+        $dataProviderContaAberto=new CActiveDataProvider('Pagamento', array('criteria'=>$criteriaContasPagar, 'pagination'=>false));
+
+        $this->render('contas_pagar', array(
+            'model'=>$model,
+            'modelContas'=>$modelContas,
+            'modelFormasPgto'=>$modelFormasPgto,
+            'dataProviderContaAberto'=>$dataProviderContaAberto
+        ));
     }
 
     public function actionConsulta()
@@ -135,20 +185,24 @@ class PagamentoController extends Controller
 
         if(isset($_POST['Pagamento']))
         {
+            $_POST['Pagamento']['valorPagar'] = str_replace(',','.', str_replace('.','',$_POST['Pagamento']['valorPagar']));
+
             $model->attributes=$_POST['Pagamento'];
+            $model->tipo = 'D';
+            $model->dtCadastro = new CDbExpression('NOW()');
+            $model->idUsuario = Yii::app()->user->idUsuario;
+            $model->dtVencimento = Formatacao::formatData($model->dtVencimento,'/','-');
             if ($model -> save())
             {
                 Yii::app()->user->setFlash('success', 'Pagamento Registrado.');
             }
             else
             {
-                $this->_model = $model;
-                $this->actionIndex();
-                exit;
+               print_r($model->errors()); die();
             }
         }
 
-		$this->redirect($this->createUrl('pagamento/index'));
+		$this->redirect($this->createUrl('pagamento/contaspagar'));
     }
 
     /**
@@ -158,75 +212,83 @@ class PagamentoController extends Controller
      */
     public function actionAlterar($id)
     {
-        $dados = array('SUCESSO'=>true);
-        if(isset($_POST['idPagamento']) && $_POST['idPagamento'] == $id)
+        $model=$this->loadModel($id);
+        $_POST['Pagamento']['valorPago'] = str_replace(',','.', str_replace('.','',$_POST['Pagamento']['valorPago']));
+
+        $dadosSalvar = array_merge($_POST['Pagamento'], array(
+            'dtPagamento'=>new CDbExpression('NOW()'),
+            'status'=>'P'
+        ));
+
+        $model->attributes = $dadosSalvar;
+        if ($model -> save())
         {
-            $valorPgto = str_replace(',','.', str_replace('.','',$_POST['valor']));
+            Yii::app()->user->setFlash('success','Pagamento efetuado.');
 
-            if(is_numeric($valorPgto) && $valorPgto > 0)
+            if($model->tipo == 'C')
             {
-                $model=$this->loadModel($id);
 
-                $model->attributes = array(
-                    'valorPago'=>$valorPgto,
-                    'dtPagamento'=>new CDbExpression('NOW()'),
-                    'status'=>'P'
-                );
-                if ($model -> save())
+                $criteriaAlunoTurma = new CDbCriteria(array(
+                    'condition'=>'idAlunoTurma = :idAlunoTurma',
+                    'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma),
+                    'with'=>array('idTipoAluno0'=>array('select'=>'quantParcelas'))
+                ));
+                $modelAlunoTurma = Alunoturma::model()->find($criteriaAlunoTurma);
+                if($modelAlunoTurma->status == 'A')
                 {
-                    $dados['MSG'] = "Pagamento efetuado.";
-
-                    $criteriaAlunoTurma = new CDbCriteria(array(
-                        'condition'=>'idAlunoTurma = :idAlunoTurma',
-                        'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma),
-                        'with'=>array('idTipoAluno0'=>array('select'=>'quantParcelas'))
-                    ));
-                    $modelAlunoTurma = Alunoturma::model()->find($criteriaAlunoTurma);
-                    if($modelAlunoTurma->status == 'A')
+                    if($modelAlunoTurma->idTipoAluno0->quantParcelas == 1)
                     {
-                        if($modelAlunoTurma->idTipoAluno0->quantParcelas == 1)
-                        {
-                            $modelPagamento = new Pagamento;
-                            $modelPagamento->attributes = array(
-                                'idAlunoTurma'=>$model->idAlunoTurma,
-                                'idUsuario'=>Yii::app()->user->idUsuario,
-                                'valorPagar'=>$model->valorPagar,
-                                'dtCadastro'=> new CDbExpression('NOW()'),
-                                'dtVencimento'=>new CDbExpression('DATE_ADD("'.$model->dtVencimento.'",INTERVAL 1 MONTH)'),
-                            );
+                        $modelPagamento = new Pagamento;
+                        $modelPagamento->attributes = array(
+                            'idAlunoTurma'=>$model->idAlunoTurma,
+                            'idUsuario'=>Yii::app()->user->idUsuario,
+                            'valorPagar'=>$model->valorPagar,
+                            'dtCadastro'=> new CDbExpression('NOW()'),
+                            'dtVencimento'=>new CDbExpression('DATE_ADD("'.$model->dtVencimento.'",INTERVAL 1 MONTH)'),
+                        );
 
-                            $modelPagamento->save();
-                        }
-                        else
-                        {
-                            $criteriaParcAberta = new CDbCriteria(array(
-                                'condition'=>'idAlunoTurma = :idAlunoTurma AND status = "A"',
-                                'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma)
-                            ));
+                        $modelPagamento->save();
+                    }
+                    else
+                    {
+                        $criteriaParcAberta = new CDbCriteria(array(
+                            'condition'=>'idAlunoTurma = :idAlunoTurma AND status = "A"',
+                            'params'=>array(':idAlunoTurma'=>$model->idAlunoTurma)
+                        ));
 
-                            $quantPgAberto = Pagamento::model()->count($criteriaParcAberta);
-                            if($quantPgAberto == 0)
-                            {
-                                $dados['ULTIMO_PGTO'] = true;
-                                $dados['URL']= $this->createUrl('alunoturma/renovar', array('id'=>$model->idAlunoTurma));
-                            }
+                        $quantPgAberto = Pagamento::model()->count($criteriaParcAberta);
+                        if($quantPgAberto == 0)
+                        {
+                            $dados['ULTIMO_PGTO'] = true;
+                            $dados['URL']= $this->createUrl('alunoturma/renovar', array('id'=>$model->idAlunoTurma));
                         }
                     }
                 }
+                if($model->idFormaPgto == 1)
+                {
+                    $modelCheque = new Cheque;
+                    $modelCheque->attributes = $_POST['Cheque'];
+                    $modelCheque->idPagamento = $model->idPagamento;
+
+                    $modelCheque->save();
+                }
+                $this->redirect($this->createUrl('/pagamento/index'));
             }
             else
             {
-                $dados['MSG'] = "Dados inválidos.";
-                $dados['SUCESSO'] = false;
+                if($model->idFormaPgto == 1)
+                {
+                    $modelCheque = new Cheque;
+                    $modelCheque->attributes = $_POST['Cheque'];
+                    $modelCheque->idPagamento = $model->idPagamento;
+
+                    $modelCheque->save();
+                }
+
+                $this->redirect($this->createUrl('/pagamento/contaspagar'));
             }
         }
-        else
-        {
-            $dados['MSG'] = "Dados inválidos.";
-            $dados['SUCESSO'] = false;
-        }
-        echo CJSON::encode($dados);
-        Yii::app()->end();
+        $this->redirect($this->createUrl('/site/index'));
     }
 
     /**

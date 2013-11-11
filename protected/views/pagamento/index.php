@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 ?>
 <div class="box-content span11">
     <fieldset>
-        <legend>Pagamento</legend>
+        <legend>Pagamentos Alunos</legend>
         <div id="buscaAluno">
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
                 'id'=>'busca-aluno-form',
@@ -31,7 +31,7 @@ $this->breadcrumbs=array(
                 <button class="btn btn-primary" id="buscarPagamentosAluno"><i class="icon-search"></i></button>
                 <input type="hidden" name="idAluno" id="idAluno" />
             <?php $this->endWidget(); ?>
-            <div class="span7" style="margin: 0; display: none" id="divTurmas">
+            <div class="span5" style="margin: 0; display: none" id="divTurmas">
                 <?php $box = $this->beginWidget(
                     'bootstrap.widgets.TbBox',
                     array(
@@ -45,8 +45,7 @@ $this->breadcrumbs=array(
                         <tr>
                             <th>Turma/Modalidade</th>
                             <th>Vencimento</th>
-                            <th>A Pagar</th>
-                            <th>Valor Pago</th>
+                            <th>A Receber</th>
                             <th>&nbsp;</th>
                         </tr>
                         </thead>
@@ -58,6 +57,25 @@ $this->breadcrumbs=array(
             </div>
         </div>
     </fieldset>
+
+    <?php $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+        'id'=>'modalPagarConta',
+        // additional javascript options for the dialog plugin
+        'options'=>array(
+            'title'=>'Receber',
+            'autoOpen'=>false,
+            'modal'=> true,
+            'width'=> 710,
+            'buttons' => array(
+                array('text'=>'Pagar','class'=>'btn btn-primary','click'=> 'js:function(){$("#pagar-form").submit();}'),
+                array('text'=>'Cancelar','class'=>'btn','click'=> 'js:function(){$(this).dialog("close");}'),
+            ),
+        ),
+    ));
+
+    echo '<div id="divDadosPagamento" class="row-fluid"></div>';
+
+    $this->endWidget('zii.widgets.jui.CJuiDialog');?>
 </div>
 <script>
     $(function(){
@@ -68,31 +86,17 @@ $this->breadcrumbs=array(
         $('.pagarTurma').live('click', function(event){
             event.preventDefault();
             var idPagamento = $(this).attr("data-idPagamento");
-            var valorPgto = $('input[name="valorPago['+idPagamento+']"]').val();
-            var url =  $(this).attr("href");
-            if(idPagamento > 0)
-            {
-                $.ajax({
-                    url: url,
-                    data: {idPagamento: idPagamento, valor: valorPgto},
-                    type: "post",
-                    dataType: 'json'
-                }).done(function(JSON){
-                    if(JSON.MSG){
-                        alert(JSON.MSG);
-                    }
+            $.ajax({
+                url: '<?php echo $this->createUrl("pagamento/montaform");?>',
+                data: {idPagamento: idPagamento},
+                type: "post",
+                dataType: "text"
+            }).done(function(retorno){
+                $("#divDadosPagamento").empty();
+                $("#divDadosPagamento").append(retorno);
+            });
 
-                    if(JSON.SUCESSO){
-                        $('#tbodyTurma').children('tr[id="linha_pgto_'+idPagamento+'"]').fadeOut('slow', function(){
-                            $(this).remove();
-                            if($('#tbodyTurma > tr').length <= 0)
-                            {
-                                $('#divTurmas').hide();
-                            }
-                        });
-                    }
-                });
-            }
+            $("#modalPagarConta").dialog("open");
         });
         $('#buscarPagamentosAluno').click(function(event){
             event.preventDefault();
@@ -118,7 +122,6 @@ $this->breadcrumbs=array(
                             $(linha).append('<td>'+JSON.PAGAMENTOS[i].turma+'</td>');
                             $(linha).append('<td>'+JSON.PAGAMENTOS[i].dataVencimento+'</td>');
                             $(linha).append('<td style="text-align: right;">'+JSON.PAGAMENTOS[i].valorPagar+'</td>');
-                            $(linha).append('<td><input type="text" name="valorPago['+JSON.PAGAMENTOS[i].idPagamento+']" /> </td>');
                             $(linha).append('<td><a class="pagarTurma" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-money"></i> </td>');
                             // $(linha).append('<td><a class="cancelarPagamento" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-ban-circle"></i> </td>');
                             $('#tbodyTurma').append(linha);
