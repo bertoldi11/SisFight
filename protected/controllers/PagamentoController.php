@@ -24,13 +24,36 @@ class PagamentoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('novo','alterar','delete','index', 'emAberto','consulta', 'contasPagar', 'montaForm'),
+                'actions'=>array('novo','alterar','delete','index', 'emAberto','consulta', 'contasPagar', 'montaForm','cancelar'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
+    }
+
+    public function actionCancelar($id)
+    {
+        $dados = array();
+        $model = $this->loadModel($id);
+        if($model->status == "A")
+            $model->status = 'C';
+
+        if($model->save())
+        {
+            $dados['SUCESSO'] = true;
+            $dados['MSG'] = 'Pagamento Cancelado';
+        }
+        else
+        {
+            $dados['SUCESSO'] = false;
+            $dados['MSG'] = 'Erro ao cancelar pagamento';
+        }
+
+        echo CJSON::encode($dados);
+
+        Yii::app()->end();
     }
 
     public function actionMontaForm()
@@ -90,6 +113,7 @@ class PagamentoController extends Controller
         if(isset($_POST['ConsultaPagamentoForm']))
         {
             $criteria = new CDbCriteria(array(
+                'condition'=>'t.tipo = "C"',
                 'with'=>array('idAlunoTurma0','idAlunoTurma0.idAluno0'),
             ));
 
@@ -130,7 +154,7 @@ class PagamentoController extends Controller
     {
         $dados = array();
         $criteria = new CDbCriteria(array(
-            'condition'=>'t.status = "A"',
+            'condition'=>'t.status = "A" AND t.tipo = "C"',
         ));
 
         if(Yii::app()->params['tipoCobranca'] == 1)
@@ -161,6 +185,7 @@ class PagamentoController extends Controller
                     'valorPagar'=>number_format($pagamento->valorPagar,2,",","."),
                     'turma'=>(Yii::app()->params['tipoCobranca'] == 1) ? $this->montaNomeTurma($pagamento) : $pagamento->idAlunoTurma0->idModalidade0->descricao,
                     'url'=>$this->createUrl('pagamento/alterar', array('id'=>$pagamento->idPagamento)),
+                    'urlCancelar'=>$this->createUrl('pagamento/cancelar', array('id'=>$pagamento->idPagamento)),
                 );
             }
 

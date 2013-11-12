@@ -77,7 +77,7 @@
                                     array('label'=>'Contas a Pagar', 'url'=>array('/pagamento/contaspagar'), 'visible'=>!Yii::app()->user->isGuest),
                                 )),
                                 array('label'=>'Consulta', 'items'=>array(
-                                    array('label'=>'Contas Pagar/Receber', 'url'=>array('/pagamento/consulta'), 'visible'=>!Yii::app()->user->isGuest),
+                                    array('label'=>'Contas Receber', 'url'=>array('/pagamento/consulta'), 'visible'=>!Yii::app()->user->isGuest),
                                 )),
                                 array('label'=>'Frequência', 'url'=>array('/turmafrequencia/index'), 'visible'=>!Yii::app()->user->isGuest),
 								array('label'=>'Usuários', 'url'=>array('/usuario/index'), 'visible'=>!Yii::app()->user->isGuest),

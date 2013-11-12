@@ -80,7 +80,28 @@ $this->breadcrumbs=array(
 <script>
     $(function(){
         $('.cancelarPagamento').live('click', function(event){
+            event.preventDefault();
 
+            if(confirm('Deseja Cancelar esse pagamento'))
+            {
+               var link = $(this);
+
+                $.ajax({
+                    url: $(link).attr('href'),
+                    type: 'get',
+                    dataType: 'json'
+                }).done(function(JSON){
+                    if(JSON.MSG){
+                        alert(JSON.MSG);
+                    }
+
+                    if(JSON.SUCESSO){
+                        $(link).parent().parent().fadeOut(function(){
+                            $(this).remove();
+                        });
+                    }
+                })
+            }
         });
 
         $('.pagarTurma').live('click', function(event){
@@ -122,8 +143,8 @@ $this->breadcrumbs=array(
                             $(linha).append('<td>'+JSON.PAGAMENTOS[i].turma+'</td>');
                             $(linha).append('<td>'+JSON.PAGAMENTOS[i].dataVencimento+'</td>');
                             $(linha).append('<td style="text-align: right;">'+JSON.PAGAMENTOS[i].valorPagar+'</td>');
-                            $(linha).append('<td><a class="pagarTurma" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-money"></i> </td>');
-                            // $(linha).append('<td><a class="cancelarPagamento" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-ban-circle"></i> </td>');
+                            $(linha).append('<td rel="tooltip" title="Registrar Pagamento"><a class="pagarTurma" href="'+JSON.PAGAMENTOS[i].url+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-money"></i> </td>');
+                            $(linha).append('<td rel="tooltip" title="Cancelar Pagamento"><a class="cancelarPagamento" href="'+JSON.PAGAMENTOS[i].urlCancelar+'" data-idPagamento="'+JSON.PAGAMENTOS[i].idPagamento+'" ><i class="icon-ban-circle"></i> </td>');
                             $('#tbodyTurma').append(linha);
                         }
                         $('#divTurmas').show();

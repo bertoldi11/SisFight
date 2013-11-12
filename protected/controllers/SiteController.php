@@ -28,7 +28,7 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         $criteria = new CDbCriteria(array(
-            'condition'=>'dtVencimento <= NOW() AND t.status = "A"',
+            'condition'=>'dtVencimento <= NOW() AND t.status = "A" AND tipo = "C"',
             'with'=>array('idAlunoTurma0','idAlunoTurma0.idAluno0'),
         ));
 
